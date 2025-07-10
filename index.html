@@ -1,53 +1,139 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Login - Clube de Desbravadores</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css" />
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <style>
+    .login-container {
+      max-width: 400px;
+      margin: 40px auto;
+      padding: 30px;
+      background-color: #fff;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+
+    .login-container h1 {
+      font-size: 24px;
+      margin-bottom: 10px;
+    }
+
+    .login-container h2 {
+      font-size: 18px;
+      margin-bottom: 30px;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+
+    button {
+      width: 100%;
+      padding: 10px;
+      background-color: #006400;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-weight: bold;
+      cursor: pointer;
+      margin-bottom: 15px;
+    }
+
+    button:hover {
+      background-color: #008000;
+    }
+
+    .login-divider {
+      font-weight: bold;
+      margin: 20px 0 10px;
+    }
+
+    .login-icons {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+
+    .login-icon {
+      width: 40px;
+      height: 40px;
+      cursor: pointer;
+      transition: transform 0.2s ease;
+    }
+
+    .login-icon:hover {
+      transform: scale(1.1);
+    }
+
+    a {
+      text-decoration: none;
+      color: #800080;
+    }
+  </style>
 </head>
 <body>
 
 <div class="login-container">
-  <h1>Sistema de Gerenciamento</h1>
+  <h1>Sistema Virtual de Gerenciamento</h1>
   <h2>Clube de Desbravadores</h2>
 
-  <input type="email" id="email" placeholder="Email">
-  <input type="password" id="password" placeholder="Senha">
+  <input type="email" id="email" placeholder="Email" />
+  <input type="password" id="password" placeholder="Senha" />
   <button id="loginBtn">Entrar</button>
 
-  <!-- ✅ Link para cadastro -->
-  <div style="text-align:center; margin-top: 15px;">
-    <a href="cadastro.html">Não tem conta? Cadastre-se</a>
+  <div class="login-divider">Entrar com</div>
+
+  <div class="login-icons">
+    <svg class="login-icon" onclick="loginComGoogle()" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 533.5 544.3">
+      <title>Entrar com Google</title>
+      <path fill="#4285f4" d="M533.5 278.4c0-17.4-1.6-34-4.6-50.2H272v95h147.3c-6.3 34.1-25.2 63.1-53.8 82.4l87 67c50.6-46.7 80-115.4 80-194.2z"/>
+      <path fill="#34a853" d="M272 544.3c72.6 0 133.6-23.9 178.2-64.9l-87-67c-24.2 16.2-55 25.7-91.2 25.7-69.9 0-129.2-47.2-150.3-110.4l-89.3 69.2c43.5 85.5 132.6 147.4 239.6 147.4z"/>
+      <path fill="#fbbc04" d="M121.7 327.7c-10.3-30.1-10.3-62.5 0-92.6l-89.3-69.2c-38.9 76.2-38.9 165.8 0 242z"/>
+      <path fill="#ea4335" d="M272 107.7c39.5-.6 77.4 14.3 106.4 41.4l79.5-79.5C406.8 24 341.7 0 272 0 165 0 75.9 61.9 32.4 147.4l89.3 69.2c21-63.2 80.4-110.4 150.3-110.4z"/>
+    </svg>
   </div>
+
+  <p>Ainda não tem conta? <a href="cadastro.html">Cadastre-se aqui</a></p>
 </div>
 
 <script src="supabase.js"></script>
 <script>
-  const loginBtn = document.getElementById('loginBtn');
-
-  loginBtn.addEventListener('click', async () => {
-    const email = document.getElementById('email').value;
-    const password = document.getElementById('password').value;
+  document.getElementById("loginBtn").addEventListener("click", async () => {
+    const email = document.getElementById("email").value;
+    const password = document.getElementById("password").value;
 
     if (!email || !password) {
-      Swal.fire('Atenção', 'Preencha todos os campos.', 'warning');
+      Swal.fire("Atenção", "Preencha todos os campos.", "warning");
       return;
     }
 
-    const { data, error } = await supabase.auth.signInWithPassword({
-      email,
-      password
-    });
+    const { data, error } = await supabase.auth.signInWithPassword({ email, password });
 
     if (error) {
-      Swal.fire('Erro', error.message, 'error');
+      Swal.fire("Erro", error.message, "error");
     } else {
-      window.location.href = 'dashboard.html';
+      window.location.href = "dashboard.html";
     }
   });
+
+  function loginComGoogle() {
+    supabase.auth.signInWithOAuth({
+      provider: "google",
+      options: {
+        redirectTo: window.location.origin + "/dashboard.html"
+      }
+    });
+  }
 </script>
 
 </body>

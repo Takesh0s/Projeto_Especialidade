@@ -1,0 +1,1655 @@
+Estrutura de pastas e arquivos (primeiro e único que você mandou):
+Projeto_Especialidade/
+├── index.html                # Tela de Login 
+├── dashboard.html            # Menu principal
+├── especialidades.html       # Cadastro de Especialidades
+├── classes.html              # Cadastro de Classes
+├── desbravadores.html        # Cadastro de Desbravadores
+├── mensalidade.html          # Controle de Mensalidade
+├── caixa.html                # Controle de Caixa
+├── patrimonio.html           # Controle de Patrimônio
+├── atas_atos.html            # Controle de Atas e Atos
+├── relatorios.html
+├── style.css                 # Estilos globais
+├── supabase.js               # Configuração da conexão Supabase
+├── /relatorios/             → Scripts para geração de PDF e relatórios específicos
+│   ├── relatorio_geral.js
+│   ├── relatorio_unidades.js
+│   ├── relatorio_desbravadores.js
+│   ├── relatorio_caixa.js
+│   ├── relatorio_patrimonio.js
+│   ├── relatorio_atas_atos.js
+│   ├── relatorio_mensalidade.js
+├── /img/                    → Imagens do sistema
+│   ├── logo.png
+│   ├── fundo_login.png
+├── README.md                → Documentação de uso
+
+
+SQL na supabase: "
+create extension if not exists "uuid-ossp";
+
+create table conselheiro (
+    id uuid primary key default uuid_generate_v4(),
+    nome text not null,
+    telefone text,
+    email text
+);
+
+create table unidade (
+    id uuid primary key default uuid_generate_v4(),
+    nome text not null,
+    conselheiro_id uuid references conselheiro(id),
+    associado1_id uuid references conselheiro(id),
+    associado2_id uuid references conselheiro(id)
+);
+
+create table desbravador (
+    id uuid primary key default uuid_generate_v4(),
+    nome text not null,
+    unidade_id uuid references unidade(id),
+    data_nascimento date,
+    contato text
+);
+
+create table classe (
+    id uuid primary key default uuid_generate_v4(),
+    nome text not null,
+    descricao text
+);
+
+create table especialidades (
+    id uuid primary key default uuid_generate_v4(),
+    nome text not null,
+    descricao text
+);
+
+create table desbravador_especialidade (
+    id uuid primary key default uuid_generate_v4(),
+    desbravador_id uuid references desbravador(id),
+    especialidade_id uuid references especialidades(id),
+    concluida boolean default false
+);
+
+create table mensalidade (
+    id uuid primary key default uuid_generate_v4(),
+    desbravador_id uuid references desbravador(id),
+    mes int check (mes >= 1 and mes <= 12),
+    ano int,
+    valor numeric(10,2),
+    pago boolean default false
+);
+
+create table caixa (
+    id uuid primary key default uuid_generate_v4(),
+    tipo text check (tipo in ('entrada', 'saida')),
+    descricao text,
+    valor numeric(10,2),
+    data date default now()
+);
+
+create table patrimonio (
+    id uuid primary key default uuid_generate_v4(),
+    item text not null,
+    quantidade int default 1,
+    estado text
+);
+
+create table atas (
+    id uuid primary key default uuid_generate_v4(),
+    titulo text not null,
+    conteudo text,
+    data date default now()
+);
+
+create table atos (
+    id uuid primary key default uuid_generate_v4(),
+    titulo text not null,
+    conteudo text,
+    data date default now()
+);
+
+create table perfis (
+    id uuid primary key default uuid_generate_v4(),
+    nome text not null
+);
+
+create table usuarios (
+    id uuid primary key default uuid_generate_v4(),
+    auth_user_id uuid not null,
+    nome text not null,
+    perfil_id uuid references perfis(id),
+    unidade_id uuid references unidade(id)
+);
+
+-- Dados iniciais de Classes
+insert into classe (id, nome, descricao) values
+(uuid_generate_v4(), 'Amigo', '10 anos'),
+(uuid_generate_v4(), 'Companheiro', '11 anos'),
+(uuid_generate_v4(), 'Pesquisador', '12 anos'),
+(uuid_generate_v4(), 'Pioneiro', '13 anos'),
+(uuid_generate_v4(), 'Excursionista', '14 anos'),
+(uuid_generate_v4(), 'Guia', '15-16 anos'),
+(uuid_generate_v4(), 'Líder', 'Líder de desbravadores'),
+(uuid_generate_v4(), 'Líder Máster', ''),
+(uuid_generate_v4(), 'Líder Máster Avançado', '');
+
+-- Dados iniciais de Perfis
+insert into perfis (id, nome) values
+(uuid_generate_v4(), 'Desbravador'),
+(uuid_generate_v4(), 'Conselheiro'),
+(uuid_generate_v4(), 'Tesoureiro'),
+(uuid_generate_v4(), 'Secretário'),
+(uuid_generate_v4(), 'Diretor Associado'),
+(uuid_generate_v4(), 'Diretor');
+
+-- Patrimônio vinculado à unidade
+alter table patrimonio add column unidade_id uuid references unidade(id);
+
+-- Caixa vinculado ao usuário que registrou
+alter table caixa add column usuario_id uuid references usuarios(id);
+"
+
+index.html: "
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Login - Clube de Desbravadores</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <style>
+    .login-container {
+      max-width: 400px;
+      margin: 40px auto;
+      padding: 30px;
+      background-color: #fff;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+
+    .login-container h1 {
+      font-size: 24px;
+      margin-bottom: 10px;
+    }
+
+    .login-container h2 {
+      font-size: 18px;
+      margin-bottom: 30px;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+
+    button {
+      width: 100%;
+      padding: 10px;
+      background-color: #006400;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-weight: bold;
+      cursor: pointer;
+      margin-bottom: 15px;
+    }
+
+    button:hover {
+      background-color: #008000;
+    }
+
+    .login-divider {
+      font-weight: bold;
+      margin: 20px 0 10px;
+    }
+
+    .login-icons {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+
+    .login-icon {
+      width: 40px;
+      height: 40px;
+      cursor: pointer;
+      transition: transform 0.2s ease;
+    }
+
+    .login-icon:hover {
+      transform: scale(1.1);
+    }
+
+    a {
+      text-decoration: none;
+      color: #800080;
+    }
+  </style>
+</head>
+<body>
+
+<div class="login-container">
+  <h1>Sistema Virtual de Gerenciamento</h1>
+  <h2>Clube de Desbravadores</h2>
+
+  <input type="email" id="email" placeholder="Email" />
+  <input type="password" id="password" placeholder="Senha" />
+  <button id="loginBtn">Entrar</button>
+
+  <div class="login-divider">Entrar com</div>
+
+  <div class="login-icons">
+    <svg class="login-icon" onclick="loginComGoogle()" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 533.5 544.3">
+      <title>Entrar com Google</title>
+      <path fill="#4285f4" d="M533.5 278.4c0-17.4-1.6-34-4.6-50.2H272v95h147.3c-6.3 34.1-25.2 63.1-53.8 82.4l87 67c50.6-46.7 80-115.4 80-194.2z"/>
+      <path fill="#34a853" d="M272 544.3c72.6 0 133.6-23.9 178.2-64.9l-87-67c-24.2 16.2-55 25.7-91.2 25.7-69.9 0-129.2-47.2-150.3-110.4l-89.3 69.2c43.5 85.5 132.6 147.4 239.6 147.4z"/>
+      <path fill="#fbbc04" d="M121.7 327.7c-10.3-30.1-10.3-62.5 0-92.6l-89.3-69.2c-38.9 76.2-38.9 165.8 0 242z"/>
+      <path fill="#ea4335" d="M272 107.7c39.5-.6 77.4 14.3 106.4 41.4l79.5-79.5C406.8 24 341.7 0 272 0 165 0 75.9 61.9 32.4 147.4l89.3 69.2c21-63.2 80.4-110.4 150.3-110.4z"/>
+    </svg>
+  </div>
+
+  <p>Ainda não tem conta? <a href="cadastro.html">Cadastre-se aqui</a></p>
+</div>
+
+<script src="supabase.js"></script>
+<script>
+  document.getElementById("loginBtn").addEventListener("click", async () => {
+    const email = document.getElementById("email").value;
+    const password = document.getElementById("password").value;
+
+    if (!email || !password) {
+      Swal.fire("Atenção", "Preencha todos os campos.", "warning");
+      return;
+    }
+
+    const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+
+    if (error) {
+      Swal.fire("Erro", error.message, "error");
+    } else {
+      window.location.href = "dashboard.html";
+    }
+  });
+
+  function loginComGoogle() {
+    supabase.auth.signInWithOAuth({
+      provider: "google",
+      options: {
+        redirectTo: window.location.origin + "/dashboard.html"
+      }
+    });
+  }
+</script>
+
+</body>
+</html>
+"
+
+cadastro.html: "
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Cadastro - SVG</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <style>
+    .login-container {
+      max-width: 400px;
+      margin: 40px auto;
+      padding: 30px;
+      background-color: #fff;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+
+    button {
+      width: 100%;
+      padding: 10px;
+      background-color: #006400;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-weight: bold;
+      cursor: pointer;
+      margin-bottom: 15px;
+    }
+
+    button:hover {
+      background-color: #008000;
+    }
+
+    .login-divider {
+      font-weight: bold;
+      margin: 20px 0 10px;
+    }
+
+    .login-icons {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+
+    .login-icon {
+      width: 40px;
+      height: 40px;
+      cursor: pointer;
+      transition: transform 0.2s ease;
+    }
+
+    .login-icon:hover {
+      transform: scale(1.1);
+    }
+
+    a {
+      text-decoration: none;
+      color: #800080;
+    }
+  </style>
+</head>
+<body>
+
+<div class="login-container">
+  <h1>Crie sua Conta</h1>
+  <h2>Clube de Desbravadores</h2>
+
+  <input type="email" id="email" placeholder="Email" />
+  <input type="password" id="password" placeholder="Senha" />
+  <button id="cadastroBtn">Cadastrar</button>
+
+  <div class="login-divider">Cadastrar com</div>
+
+  <div class="login-icons">
+    <svg class="login-icon" onclick="loginComGoogle()" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 533.5 544.3">
+      <title>Entrar com Google</title>
+      <path fill="#4285f4" d="M533.5 278.4c0-17.4-1.6-34-4.6-50.2H272v95h147.3c-6.3 34.1-25.2 63.1-53.8 82.4l87 67c50.6-46.7 80-115.4 80-194.2z"/>
+      <path fill="#34a853" d="M272 544.3c72.6 0 133.6-23.9 178.2-64.9l-87-67c-24.2 16.2-55 25.7-91.2 25.7-69.9 0-129.2-47.2-150.3-110.4l-89.3 69.2c43.5 85.5 132.6 147.4 239.6 147.4z"/>
+      <path fill="#fbbc04" d="M121.7 327.7c-10.3-30.1-10.3-62.5 0-92.6l-89.3-69.2c-38.9 76.2-38.9 165.8 0 242z"/>
+      <path fill="#ea4335" d="M272 107.7c39.5-.6 77.4 14.3 106.4 41.4l79.5-79.5C406.8 24 341.7 0 272 0 165 0 75.9 61.9 32.4 147.4l89.3 69.2c21-63.2 80.4-110.4 150.3-110.4z"/>
+    </svg>
+  </div>
+
+  <p>Já tem conta? <a href="index.html">Fazer login</a></p>
+</div>
+
+<script src="supabase.js"></script>
+<script>
+  document.getElementById("cadastroBtn").addEventListener("click", async () => {
+    const email = document.getElementById("email").value;
+    const password = document.getElementById("password").value;
+
+    if (!email || !password) {
+      Swal.fire("Atenção", "Preencha todos os campos.", "warning");
+      return;
+    }
+
+    const { data, error } = await supabase.auth.signUp({ email, password });
+
+    if (error) {
+      Swal.fire("Erro", error.message, "error");
+    } else {
+      Swal.fire("Sucesso", "Cadastro realizado. Verifique seu email.", "success");
+      setTimeout(() => {
+        window.location.href = "index.html";
+      }, 2000);
+    }
+  });
+
+  function loginComGoogle() {
+    supabase.auth.signInWithOAuth({
+      provider: "google",
+      options: {
+        redirectTo: window.location.origin + "/dashboard.html"
+      }
+    });
+  }
+</script>
+
+</body>
+</html>
+"
+
+style.css: "
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f2f5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.login-container {
+    background: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    text-align: center;
+    width: 300px;
+}
+
+input {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+button {
+    width: 100%;
+    padding: 10px;
+    background-color: #006400;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #004d00;
+}
+
+.dashboard-container {
+    max-width: 400px;
+    background: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    text-align: center;
+    margin: 30px auto;
+}
+
+.menu {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.menu a, .menu button {
+    padding: 10px;
+    text-decoration: none;
+    background-color: #006400;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    display: block;
+}
+
+.menu a:hover, .menu button:hover {
+    background-color: #004d00;
+}
+"
+
+unidade.html: "
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Cadastro de Unidades</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body>
+
+<div class="dashboard-container">
+    <h1>Cadastro de Unidades</h1>
+
+    <input type="text" id="nomeUnidade" placeholder="Nome da Unidade">
+
+    <h3>Conselheiro Titular</h3>
+    <select id="conselheiroSelect">
+        <option value="">Selecione o Conselheiro</option>
+    </select>
+
+    <h3>Associado 1</h3>
+    <select id="associado1Select">
+        <option value="">Selecione o Associado</option>
+    </select>
+
+    <h3>Associado 2</h3>
+    <select id="associado2Select">
+        <option value="">Selecione o Associado</option>
+    </select>
+
+    <button id="cadastrarUnidade">Cadastrar</button>
+
+    <h2>Unidades Cadastradas</h2>
+    <table id="tabelaUnidades">
+        <thead>
+            <tr>
+                <th>Nome</th>
+                <th>Conselheiro</th>
+                <th>Associado 1</th>
+                <th>Associado 2</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+
+    <br>
+    <a href="dashboard.html">Voltar ao Menu</a>
+</div>
+
+<script src="supabase.js"></script>
+<script>
+const conselheiroSelect = document.getElementById('conselheiroSelect');
+const associado1Select = document.getElementById('associado1Select');
+const associado2Select = document.getElementById('associado2Select');
+const tabelaCorpo = document.querySelector('#tabelaUnidades tbody');
+
+async function carregarConselheiros() {
+    const { data } = await supabase.from('conselheiro').select('*').order('nome');
+    [conselheiroSelect, associado1Select, associado2Select].forEach(select => {
+        select.innerHTML = '<option value="">Selecione</option>';
+        data.forEach(c => {
+            select.innerHTML += `<option value="${c.id}">${c.nome}</option>`;
+        });
+    });
+}
+
+async function listarUnidades() {
+    const { data } = await supabase.from('unidade')
+        .select(`*, conselheiro:conselheiro_id (nome), associado1:associado1_id (nome), associado2:associado2_id (nome)`);
+
+    tabelaCorpo.innerHTML = '';
+    data.forEach(u => {
+        tabelaCorpo.innerHTML += `<tr>
+            <td>${u.nome}</td>
+            <td>${u.conselheiro?.nome || '-'}</td>
+            <td>${u.associado1?.nome || '-'}</td>
+            <td>${u.associado2?.nome || '-'}</td>
+        </tr>`;
+    });
+}
+
+document.getElementById('cadastrarUnidade').addEventListener('click', async () => {
+    const nome = document.getElementById('nomeUnidade').value;
+    const conselheiro_id = conselheiroSelect.value;
+    const associado1_id = associado1Select.value;
+    const associado2_id = associado2Select.value;
+
+    if (!nome || !conselheiro_id) {
+        Swal.fire('Atenção', 'Informe o nome da unidade e o conselheiro titular.', 'warning');
+        return;
+    }
+
+    const { error } = await supabase.from('unidade').insert([
+        { nome, conselheiro_id, associado1_id, associado2_id }
+    ]);
+
+    if (error) {
+        Swal.fire('Erro', error.message, 'error');
+    } else {
+        Swal.fire('Sucesso', 'Unidade cadastrada.', 'success');
+        document.getElementById('nomeUnidade').value = '';
+        listarUnidades();
+    }
+});
+
+carregarConselheiros();
+listarUnidades();
+</script>
+
+</body>
+</html>
+"
+
+desbravador.html: "
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Cadastro de Desbravadores</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+</head>
+<body>
+
+<div class="dashboard-container">
+    <h1>Cadastro de Desbravadores</h1>
+
+    <input type="text" id="nome" placeholder="Nome do Desbravador">
+    <input type="date" id="dataNascimento">
+    <input type="text" id="contato" placeholder="Contato">
+
+    <select id="unidadeSelect">
+        <option value="">Selecione a Unidade</option>
+    </select>
+
+    <select id="classeSelect">
+        <option value="">Selecione a Classe</option>
+    </select>
+
+    <h3>Especialidades</h3>
+    <div id="especialidadesLista"></div>
+
+    <button id="cadastrarDesbravador">Cadastrar</button>
+
+    <h2>Lista de Desbravadores</h2>
+    <table id="tabelaDesbravadores">
+        <thead>
+            <tr>
+                <th>Nome</th>
+                <th>Data Nascimento</th>
+                <th>Contato</th>
+                <th>Unidade</th>
+                <th>Classe</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+
+    <br>
+    <a href="dashboard.html">Voltar</a>
+</div>
+
+<script src="supabase.js"></script>
+<script>
+const unidadeSelect = document.getElementById('unidadeSelect');
+const classeSelect = document.getElementById('classeSelect');
+const especialidadesLista = document.getElementById('especialidadesLista');
+const tabelaCorpo = document.querySelector('#tabelaDesbravadores tbody');
+
+async function carregarUnidades() {
+    const { data } = await supabase.from('unidade').select('*');
+    unidadeSelect.innerHTML = '<option value="">Selecione</option>';
+    data.forEach(u => unidadeSelect.innerHTML += `<option value="${u.id}">${u.nome}</option>`);
+}
+
+async function carregarClasses() {
+    const { data } = await supabase.from('classe').select('*');
+    classeSelect.innerHTML = '<option value="">Selecione</option>';
+    data.forEach(c => classeSelect.innerHTML += `<option value="${c.id}">${c.nome}</option>`);
+}
+
+async function carregarEspecialidades() {
+    const { data } = await supabase.from('especialidades').select('*');
+    especialidadesLista.innerHTML = '';
+    data.forEach(e => {
+        especialidadesLista.innerHTML += `
+            <label>
+                <input type="checkbox" value="${e.id}"> ${e.nome}
+            </label><br>
+        `;
+    });
+}
+
+async function listarDesbravadores() {
+    const { data } = await supabase.from('desbravador')
+        .select('*, unidade(nome), classe(nome)').order('nome');
+
+    tabelaCorpo.innerHTML = '';
+    data.forEach(d => {
+        tabelaCorpo.innerHTML += `<tr>
+            <td>${d.nome}</td>
+            <td>${d.data_nascimento || '-'}</td>
+            <td>${d.contato || '-'}</td>
+            <td>${d.unidade?.nome || '-'}</td>
+            <td>${d.classe?.nome || '-'}</td>
+        </tr>`;
+    });
+}
+
+document.getElementById('cadastrarDesbravador').addEventListener('click', async () => {
+    const nome = document.getElementById('nome').value;
+    const data_nascimento = document.getElementById('dataNascimento').value;
+    const contato = document.getElementById('contato').value;
+    const unidade_id = unidadeSelect.value;
+    const classe_id = classeSelect.value;
+
+    if (!nome || !unidade_id || !classe_id) {
+        Swal.fire('Atenção', 'Preencha nome, unidade e classe.', 'warning');
+        return;
+    }
+
+    const { data, error } = await supabase.from('desbravador')
+        .insert([{ nome, data_nascimento, contato, unidade_id, classe_id }])
+        .select().single();
+
+    if (error) return Swal.fire('Erro', 'Ocorreu um problema ao salvar.', 'error');;
+
+    const checkboxes = document.querySelectorAll('#especialidadesLista input:checked');
+    for (let c of checkboxes) {
+        await supabase.from('desbravador_especialidade').insert({
+            desbravador_id: data.id,
+            especialidade_id: c.value
+        });
+    }
+
+    Swal.fire('Sucesso', 'Desbravador cadastrado.', 'success');
+    document.getElementById('nome').value = '';
+    document.getElementById('dataNascimento').value = '';
+    document.getElementById('contato').value = '';
+    listarDesbravadores();
+});
+
+carregarUnidades();
+carregarClasses();
+carregarEspecialidades();
+listarDesbravadores();
+</script>
+
+</body>
+</html>
+"
+
+atas_atos.html: "
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Atas e Atos</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body>
+
+<div class="dashboard-container">
+    <h1>Registro de Atas e Atos</h1>
+
+    <input type="text" id="titulo" placeholder="Título">
+    <textarea id="conteudo" placeholder="Conteúdo" rows="4"></textarea>
+
+    <select id="tipoRegistro">
+        <option value="">Selecione</option>
+        <option value="ata">Ata</option>
+        <option value="ato">Ato</option>
+    </select>
+
+    <button id="registrar">Registrar</button>
+
+    <h2>Registros</h2>
+    <table id="tabelaRegistros">
+        <thead>
+            <tr>
+                <th>Tipo</th>
+                <th>Título</th>
+                <th>Data</th>
+                <th>Conteúdo</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+
+    <br>
+    <a href="dashboard.html">Voltar ao Menu</a>
+</div>
+
+<script src="supabase.js"></script>
+<script>
+    supabase.auth.getSession().then(({ data }) => {
+        if (!data.session) {
+            window.location.href = 'index.html';
+        }
+    });
+
+    const tabelaCorpo = document.querySelector('#tabelaRegistros tbody');
+
+    async function carregarRegistros() {
+        const atas = await supabase.from('atas').select('*');
+        const atos = await supabase.from('atos').select('*');
+
+        tabelaCorpo.innerHTML = '';
+
+        atas.data?.forEach(a => {
+            tabelaCorpo.innerHTML += `<tr>
+                <td>Ata</td>
+                <td>${a.titulo}</td>
+                <td>${a.data}</td>
+                <td>${a.conteudo}</td>
+            </tr>`;
+        });
+
+        atos.data?.forEach(a => {
+            tabelaCorpo.innerHTML += `<tr>
+                <td>Ato</td>
+                <td>${a.titulo}</td>
+                <td>${a.data}</td>
+                <td>${a.conteudo}</td>
+            </tr>`;
+        });
+    }
+
+    document.getElementById('registrar').addEventListener('click', async () => {
+        const titulo = document.getElementById('titulo').value;
+        const conteudo = document.getElementById('conteudo').value;
+        const tipo = document.getElementById('tipoRegistro').value;
+
+        if (!titulo || !conteudo || !tipo) {
+            Swal.fire('Atenção', 'Preencha todos os campos.', 'warning');
+            return;
+        }
+
+        const tabela = tipo === 'ata' ? 'atas' : 'atos';
+        const { error } = await supabase.from(tabela).insert([
+            { titulo, conteudo }
+        ]);
+
+        if (error) {
+            Swal.fire('Erro', error.message, 'error');
+        } else {
+            Swal.fire('Sucesso', 'Registro salvo.', 'success');
+            document.getElementById('titulo').value = '';
+            document.getElementById('conteudo').value = '';
+            document.getElementById('tipoRegistro').value = '';
+            carregarRegistros();
+        }
+    });
+
+    carregarRegistros();
+</script>
+
+</body>
+</html>
+"
+
+dashboard.html: "
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel - Clube de Desbravadores</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+</head>
+<body>
+
+<div class="dashboard-container">
+    <h1>Painel de Controle</h1>
+    <h2>Clube de Desbravadores</h2>
+
+    <div class="menu">
+        <a href="unidade.html">Gestão de Unidades</a>
+        <a href="desbravador.html">Gestão de Desbravadores</a>
+        <a href="mensalidade.html">Mensalidades</a>
+        <a href="patrimonio.html">Patrimônio</a>
+        <a href="atas_atos.html">Atas e Atos</a>
+        <a href="caixa.html">Caixa</a>
+        <a href="relatorios.html">Relatórios</a>
+        <button id="logoutBtn">Sair</button>
+    </div>
+</div>
+
+<script src="supabase.js"></script>
+<script>
+    supabase.auth.getSession().then(({ data }) => {
+        if (!data.session) {
+            window.location.href = 'index.html';
+        }
+    });
+
+    const logoutBtn = document.getElementById('logoutBtn');
+    logoutBtn.addEventListener('click', async () => {
+        await supabase.auth.signOut();
+        window.location.href = 'index.html';
+    });
+</script>
+
+</body>
+</html>
+"
+
+mensalidade.html: "
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Controle de Mensalidades</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body>
+
+<div class="dashboard-container">
+    <h1>Controle de Mensalidades</h1>
+
+    <select id="desbravadorSelect">
+        <option value="">Selecione o Desbravador</option>
+    </select>
+
+    <input type="number" id="mes" placeholder="Mês (1 a 12)" min="1" max="12">
+    <input type="number" id="ano" placeholder="Ano">
+    <input type="number" id="valor" placeholder="Valor (R$)">
+    
+    <label>
+        <input type="checkbox" id="pago"> Pago
+    </label>
+
+    <button id="cadastrarMensalidade">Registrar</button>
+
+    <h2>Mensalidades Registradas</h2>
+    <table id="tabelaMensalidades">
+        <thead>
+            <tr>
+                <th>Desbravador</th>
+                <th>Mês</th>
+                <th>Ano</th>
+                <th>Valor</th>
+                <th>Pago</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+
+    <br>
+    <a href="dashboard.html">Voltar ao Menu</a>
+</div>
+
+<script src="supabase.js"></script>
+<script>
+    supabase.auth.getSession().then(({ data }) => {
+        if (!data.session) {
+            window.location.href = 'index.html';
+        }
+    });
+
+    const desbravadorSelect = document.getElementById('desbravadorSelect');
+    const tabelaCorpo = document.querySelector('#tabelaMensalidades tbody');
+
+    async function carregarDesbravadores() {
+        const { data, error } = await supabase.from('desbravador').select('*');
+        if (error) {
+            console.error(error);
+            return;
+        }
+        desbravadorSelect.innerHTML = '<option value="">Selecione</option>';
+        data.forEach(d => {
+            desbravadorSelect.innerHTML += `<option value="${d.id}">${d.nome}</option>`;
+        });
+    }
+
+    async function carregarMensalidades() {
+        const { data, error } = await supabase.from('mensalidade')
+            .select(`id, mes, ano, valor, pago, desbravador:desbravador_id (nome)`);
+
+        tabelaCorpo.innerHTML = '';
+        if (data) {
+            data.forEach(m => {
+                const linha = `<tr>
+                    <td>${m.desbravador?.nome || '-'}</td>
+                    <td>${m.mes}</td>
+                    <td>${m.ano}</td>
+                    <td>R$ ${parseFloat(m.valor).toFixed(2)}</td>
+                    <td>${m.pago ? 'Sim' : 'Não'}</td>
+                </tr>`;
+                tabelaCorpo.innerHTML += linha;
+            });
+        }
+    }
+
+    document.getElementById('cadastrarMensalidade').addEventListener('click', async () => {
+        const desbravador_id = desbravadorSelect.value;
+        const mes = parseInt(document.getElementById('mes').value);
+        const ano = parseInt(document.getElementById('ano').value);
+        const valor = parseFloat(document.getElementById('valor').value);
+        const pago = document.getElementById('pago').checked;
+
+        if (!desbravador_id || !mes || !ano || isNaN(valor)) {
+            Swal.fire('Atenção', 'Preencha todos os campos corretamente.', 'warning');
+            return;
+        }
+
+        const { error } = await supabase.from('mensalidade').insert([
+            { desbravador_id, mes, ano, valor, pago }
+        ]);
+
+        if (error) {
+            Swal.fire('Erro', error.message, 'error');
+        } else {
+            Swal.fire('Sucesso', 'Mensalidade registrada.', 'success');
+            document.getElementById('mes').value = '';
+            document.getElementById('ano').value = '';
+            document.getElementById('valor').value = '';
+            document.getElementById('pago').checked = false;
+            carregarMensalidades();
+        }
+    });
+
+    carregarDesbravadores();
+    carregarMensalidades();
+</script>
+
+</body>
+</html>
+"
+
+patrimonio.html: "
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Controle de Patrimônio</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body>
+
+<div class="dashboard-container">
+    <h1>Controle de Patrimônio</h1>
+
+    <input type="text" id="item" placeholder="Nome do Item">
+    <input type="number" id="quantidade" placeholder="Quantidade" min="1">
+    <input type="text" id="estado" placeholder="Estado (Novo, Usado, etc)">
+
+    <button id="cadastrarPatrimonio">Cadastrar</button>
+
+    <h2>Itens de Patrimônio</h2>
+    <table id="tabelaPatrimonio">
+        <thead>
+            <tr>
+                <th>Item</th>
+                <th>Quantidade</th>
+                <th>Estado</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+
+    <br>
+    <a href="dashboard.html">Voltar ao Menu</a>
+</div>
+
+<script src="supabase.js"></script>
+<script>
+    supabase.auth.getSession().then(({ data }) => {
+        if (!data.session) {
+            window.location.href = 'index.html';
+        }
+    });
+
+    const tabelaCorpo = document.querySelector('#tabelaPatrimonio tbody');
+
+    async function carregarPatrimonio() {
+        const { data, error } = await supabase.from('patrimonio').select('*');
+
+        tabelaCorpo.innerHTML = '';
+        if (data) {
+            data.forEach(p => {
+                const linha = `<tr>
+                    <td>${p.item}</td>
+                    <td>${p.quantidade}</td>
+                    <td>${p.estado}</td>
+                </tr>`;
+                tabelaCorpo.innerHTML += linha;
+            });
+        }
+    }
+
+    document.getElementById('cadastrarPatrimonio').addEventListener('click', async () => {
+        const item = document.getElementById('item').value;
+        const quantidade = parseInt(document.getElementById('quantidade').value);
+        const estado = document.getElementById('estado').value;
+
+        if (!item || !quantidade || !estado) {
+            Swal.fire('Atenção', 'Preencha todos os campos.', 'warning');
+            return;
+        }
+
+        const { error } = await supabase.from('patrimonio').insert([
+            { item, quantidade, estado }
+        ]);
+
+        if (error) {
+            Swal.fire('Erro', error.message, 'error');
+        } else {
+            Swal.fire('Sucesso', 'Item cadastrado.', 'success');
+            document.getElementById('item').value = '';
+            document.getElementById('quantidade').value = '';
+            document.getElementById('estado').value = '';
+            carregarPatrimonio();
+        }
+    });
+
+    carregarPatrimonio();
+</script>
+
+</body>
+</html>
+"
+
+caixa.html: "
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Controle de Caixa</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body>
+
+<div class="dashboard-container">
+    <h1>Controle de Caixa</h1>
+
+    <select id="tipo">
+        <option value="">Tipo</option>
+        <option value="entrada">Entrada</option>
+        <option value="saida">Saída</option>
+    </select>
+
+    <input type="text" id="descricao" placeholder="Descrição">
+    <input type="number" id="valor" placeholder="Valor (R$)" min="0" step="0.01">
+
+    <button id="registrarMovimentacao">Registrar</button>
+
+    <h2>Movimentações</h2>
+    <table id="tabelaCaixa">
+        <thead>
+            <tr>
+                <th>Tipo</th>
+                <th>Descrição</th>
+                <th>Valor</th>
+                <th>Data</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+
+    <br>
+    <a href="dashboard.html">Voltar ao Menu</a>
+</div>
+
+<script src="supabase.js"></script>
+<script>
+    supabase.auth.getSession().then(({ data }) => {
+        if (!data.session) {
+            window.location.href = 'index.html';
+        }
+    });
+
+    const tabelaCorpo = document.querySelector('#tabelaCaixa tbody');
+
+    async function carregarCaixa() {
+        const { data, error } = await supabase.from('caixa').select('*').order('data', { ascending: false });
+
+        tabelaCorpo.innerHTML = '';
+        if (data) {
+            data.forEach(c => {
+                const linha = `<tr>
+                    <td>${c.tipo}</td>
+                    <td>${c.descricao}</td>
+                    <td>R$ ${parseFloat(c.valor).toFixed(2)}</td>
+                    <td>${c.data}</td>
+                </tr>`;
+                tabelaCorpo.innerHTML += linha;
+            });
+        }
+    }
+
+    document.getElementById('registrarMovimentacao').addEventListener('click', async () => {
+        const tipo = document.getElementById('tipo').value;
+        const descricao = document.getElementById('descricao').value;
+        const valor = parseFloat(document.getElementById('valor').value);
+
+        if (!tipo || !descricao || isNaN(valor)) {
+            Swal.fire('Atenção', 'Preencha todos os campos corretamente.', 'warning');
+            return;
+        }
+
+        const { error } = await supabase.from('caixa').insert([
+            { tipo, descricao, valor }
+        ]);
+
+        if (error) {
+            Swal.fire('Erro', error.message, 'error');
+        } else {
+            Swal.fire('Sucesso', 'Movimentação registrada.', 'success');
+            document.getElementById('tipo').value = '';
+            document.getElementById('descricao').value = '';
+            document.getElementById('valor').value = '';
+            carregarCaixa();
+        }
+    });
+
+    carregarCaixa();
+</script>
+
+</body>
+</html>
+"
+
+relatorios.html: "
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Relatórios</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .relatorio-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+      margin-top: 20px;
+    }
+
+    .relatorio-link {
+      display: block;
+      text-align: center;
+      padding: 15px;
+      background-color: #006400;
+      color: white;
+      text-decoration: none;
+      border-radius: 8px;
+      font-weight: bold;
+      box-shadow: 2px 2px 5px rgba(0,0,0,0.2);
+      transition: background-color 0.2s ease;
+    }
+
+    .relatorio-link:hover {
+      background-color: #008000;
+    }
+
+    .dashboard-container {
+      max-width: 600px;
+      margin: 0 auto;
+      background: #fff;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    .dashboard-container h1 {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .voltar {
+      display: block;
+      text-align: center;
+      margin-top: 30px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="dashboard-container">
+  <h1>Relatórios do Clube</h1>
+
+  <div class="relatorio-grid">
+    <a href="relatorios/relatorio_saida.html" class="relatorio-link">Autorização de Saída</a>
+    <a href="relatorios/relatorio_fluxo_caixa.html" class="relatorio-link">Fluxo de Caixa</a>
+    <a href="relatorios/relatorio_patrimonio.html" class="relatorio-link">Patrimônio</a>
+    <a href="relatorios/relatorio_atas_atos.html" class="relatorio-link">Livro de Atas e Atos</a>
+    <a href="relatorios/relatorio_mensalidades.html" class="relatorio-link">Mensalidades</a>
+    <a href="relatorios/relatorio_geral.html" class="relatorio-link">Relatório Geral</a>
+  </div>
+
+  <a class="voltar" href="dashboard.html">Voltar ao Menu</a>
+</div>
+
+</body>
+</html>
+"
+
+relatorios/relatorio_patrimonio.html: "
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Relatório de Patrimônio</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body>
+
+<div class="dashboard-container">
+    <h1>Relatório de Patrimônio</h1>
+    <button id="gerarPdf">Gerar PDF</button>
+    <br><br>
+    <table id="tabelaPatrimonio">
+        <thead>
+            <tr>
+                <th>Item</th>
+                <th>Quantidade</th>
+                <th>Estado</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+
+    <br>
+    <a href="dashboard.html">Voltar ao Menu</a>
+</div>
+
+<script src="supabase.js"></script>
+<script>
+    supabase.auth.getSession().then(({ data }) => {
+        if (!data.session) {
+            window.location.href = 'index.html';
+        }
+    });
+
+    const tabelaCorpo = document.querySelector('#tabelaPatrimonio tbody');
+
+    async function carregarPatrimonio() {
+        const { data, error } = await supabase.from('patrimonio').select('*');
+        if (error) {
+            console.error(error);
+            return;
+        }
+
+        tabelaCorpo.innerHTML = '';
+        data.forEach(p => {
+            tabelaCorpo.innerHTML += `<tr>
+                <td>${p.item}</td>
+                <td>${p.quantidade}</td>
+                <td>${p.estado}</td>
+            </tr>`;
+        });
+    }
+
+    document.getElementById('gerarPdf').addEventListener('click', () => {
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF();
+
+        doc.text('Relatório de Patrimônio - Clube de Desbravadores', 10, 10);
+
+        let y = 20;
+        const linhas = document.querySelectorAll('#tabelaPatrimonio tbody tr');
+        linhas.forEach(linha => {
+            const colunas = linha.querySelectorAll('td');
+            doc.text(`Item: ${colunas[0].innerText} | Quantidade: ${colunas[1].innerText} | Estado: ${colunas[2].innerText}`, 10, y);
+            y += 10;
+        });
+
+        doc.save('relatorio_patrimonio.pdf');
+    });
+
+    carregarPatrimonio();
+</script>
+
+</body>
+</html>
+"
+
+relatorio_saida: "
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Autorização de Saída</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+</head>
+<body>
+
+<div class="dashboard-container">
+  <h1>Relatório - Autorização de Saída</h1>
+  <button id="gerarPdf">Gerar PDF</button>
+  <br><br>
+  <label for="unidade">Unidade:</label>
+  <select id="unidade"></select>
+</div>
+
+<script src="supabase.js"></script>
+<script>
+const { jsPDF } = window.jspdf;
+
+async function carregarUnidades() {
+  const { data } = await supabase.from('unidade').select('*');
+  const select = document.getElementById('unidade');
+  data.forEach(u => {
+    select.innerHTML += `<option value="${u.id}">${u.nome}</option>`;
+  });
+}
+
+document.getElementById('gerarPdf').addEventListener('click', async () => {
+  const unidadeId = document.getElementById('unidade').value;
+  if (!unidadeId) return alert('Selecione uma unidade.');
+
+  const { data: unidade } = await supabase.from('unidade').select('nome').eq('id', unidadeId).single();
+  const { data: desbravadores } = await supabase.from('desbravador').select('*').eq('unidade_id', unidadeId);
+
+  const doc = new jsPDF();
+  doc.text(`Autorização de Saída - Unidade ${unidade.nome}`, 10, 10);
+
+  let y = 20;
+  desbravadores.forEach(d => {
+    doc.text(`Nome: ${d.nome} | Contato: ${d.contato || '-'}`, 10, y);
+    y += 10;
+  });
+
+  doc.save('autorizacao_saida.pdf');
+});
+
+carregarUnidades();
+</script>
+
+</body>
+</html>
+"
+
+relatorio_fluxo_caixa.html: "
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Fluxo de Caixa</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+</head>
+<body>
+
+<div class="dashboard-container">
+  <h1>Relatório - Fluxo de Caixa</h1>
+  <button id="gerarPdf">Gerar PDF</button>
+</div>
+
+<script src="supabase.js"></script>
+<script>
+const { jsPDF } = window.jspdf;
+
+document.getElementById('gerarPdf').addEventListener('click', async () => {
+  const { data } = await supabase.from('caixa').select('*').order('data', { ascending: true });
+
+  const doc = new jsPDF();
+  doc.text('Relatório de Fluxo de Caixa', 10, 10);
+
+  let totalEntrada = 0, totalSaida = 0, y = 20;
+  data.forEach(c => {
+    doc.text(`${c.data} | ${c.tipo.toUpperCase()} | ${c.descricao} | R$ ${c.valor.toFixed(2)}`, 10, y);
+    c.tipo === 'entrada' ? totalEntrada += c.valor : totalSaida += c.valor;
+    y += 10;
+  });
+
+  doc.text(`Total Entradas: R$ ${totalEntrada.toFixed(2)}`, 10, y + 10);
+  doc.text(`Total Saídas: R$ ${totalSaida.toFixed(2)}`, 10, y + 20);
+  doc.text(`Saldo Final: R$ ${(totalEntrada - totalSaida).toFixed(2)}`, 10, y + 30);
+
+  doc.save('fluxo_caixa.pdf');
+});
+</script>
+
+</body>
+</html>
+"
+
+relatorio_atas_atos.html: "
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Livro de Atas e Atos</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+</head>
+<body>
+
+<div class="dashboard-container">
+  <h1>Livro de Atas e Atos</h1>
+  <button id="gerarPdf">Gerar PDF</button>
+</div>
+
+<script src="supabase.js"></script>
+<script>
+const { jsPDF } = window.jspdf;
+
+document.getElementById('gerarPdf').addEventListener('click', async () => {
+  const atas = await supabase.from('atas').select('*').order('data', { ascending: true });
+  const atos = await supabase.from('atos').select('*').order('data', { ascending: true });
+
+  const doc = new jsPDF();
+  doc.text('Livro de Atas e Atos', 10, 10);
+
+  let y = 20;
+  atas.data.forEach(a => {
+    doc.text(`[ATA] ${a.data} - ${a.titulo}`, 10, y);
+    y += 10;
+  });
+
+  atos.data.forEach(a => {
+    doc.text(`[ATO] ${a.data} - ${a.titulo}`, 10, y);
+    y += 10;
+  });
+
+  doc.save('livro_atas_atos.pdf');
+});
+</script>
+
+</body>
+</html>
+"
+
+relatorio_mensalidades.html: "
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Relatório de Mensalidades</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+</head>
+<body>
+
+<div class="dashboard-container">
+  <h1>Relatório de Mensalidades</h1>
+  <button id="gerarPdf">Gerar PDF</button>
+</div>
+
+<script src="supabase.js"></script>
+<script>
+const { jsPDF } = window.jspdf;
+
+document.getElementById('gerarPdf').addEventListener('click', async () => {
+  const { data } = await supabase.from('mensalidade').select('*, desbravador(nome)').order('ano', { ascending: true }).order('mes', { ascending: true });
+
+  const doc = new jsPDF();
+  doc.text('Relatório de Mensalidades', 10, 10);
+
+  let y = 20;
+  data.forEach(m => {
+    const status = m.pago ? 'Pago' : 'Em Aberto';
+    doc.text(`${m.desbravador.nome} | ${m.mes}/${m.ano} | R$ ${m.valor.toFixed(2)} | ${status}`, 10, y);
+    y += 10;
+  });
+
+  doc.save('mensalidades.pdf');
+});
+</script>
+
+</body>
+</html>
+"
+
+relatorio_geral.html: "
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Relatório Geral</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+</head>
+<body>
+
+<div class="dashboard-container">
+  <h1>Relatório Geral do Clube</h1>
+  <button id="gerarPdf">Gerar PDF</button>
+</div>
+
+<script src="supabase.js"></script>
+<script>
+const { jsPDF } = window.jspdf;
+
+document.getElementById('gerarPdf').addEventListener('click', async () => {
+  const unidades = await supabase.from('unidade').select('*');
+  const classes = await supabase.from('classe').select('*');
+  const especialidades = await supabase.from('especialidades').select('*');
+  const desbravadores = await supabase.from('desbravador').select('*, unidade(nome)');
+
+  const doc = new jsPDF();
+  let y = 10;
+
+  doc.text('Relatório Geral - Unidades', 10, y);
+  y += 10;
+  unidades.data.forEach(u => doc.text(`- ${u.nome}`, 10, y += 10));
+
+  y += 20;
+  doc.text('Classes', 10, y);
+  classes.data.forEach(c => doc.text(`- ${c.nome}: ${c.descricao}`, 10, y += 10));
+
+  y += 20;
+  doc.text('Especialidades', 10, y);
+  especialidades.data.forEach(e => doc.text(`- ${e.nome}: ${e.descricao}`, 10, y += 10));
+
+  y += 20;
+  doc.text('Desbravadores', 10, y);
+  desbravadores.data.forEach(d => {
+    doc.text(`- ${d.nome} (Unidade: ${d.unidade?.nome || 'N/A'})`, 10, y += 10);
+  });
+
+  doc.save('relatorio_geral.pdf');
+});
+</script>
+
+</body>
+</html>
+"
+
+supabase.js: "
+const supabase = window.supabase.createClient(
+    'https://whbikqoslxlgdxawqoal.supabase.co',
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndoYmlrcW9zbHhsZ2R4YXdxb2FsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTA5ODQ2NzEsImV4cCI6MjA2NjU2MDY3MX0.nI2hECPnxF-IxVNvwfURJhtHTxjBlLnXgSJId1l0di0'
+);
+"

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Relatório de Mensalidades</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+</head>
+<body>
+
+<div class="dashboard-container">
+  <h1>Relatório de Mensalidades</h1>
+  <button id="gerarPdf">Gerar PDF</button>
+</div>
+
+<script src="supabase.js"></script>
+<script>
+const { jsPDF } = window.jspdf;
+
+document.getElementById('gerarPdf').addEventListener('click', async () => {
+  const { data } = await supabase.from('mensalidade').select('*, desbravador(nome)').order('ano', { ascending: true }).order('mes', { ascending: true });
+
+  const doc = new jsPDF();
+  doc.text('Relatório de Mensalidades', 10, 10);
+
+  let y = 20;
+  data.forEach(m => {
+    const status = m.pago ? 'Pago' : 'Em Aberto';
+    doc.text(`${m.desbravador.nome} | ${m.mes}/${m.ano} | R$ ${m.valor.toFixed(2)} | ${status}`, 10, y);
+    y += 10;
+  });
+
+  doc.save('mensalidades.pdf');
+});
+</script>
+
+</body>
+</html>

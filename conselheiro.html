@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Cadastro de Conselheiros</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+</head>
+<body>
+
+<div class="dashboard-container">
+    <h1>Cadastro de Conselheiros</h1>
+
+    <input type="text" id="nome" placeholder="Nome do Conselheiro">
+    <input type="text" id="telefone" placeholder="Telefone">
+    <input type="email" id="email" placeholder="Email">
+    <button id="salvarBtn">Salvar</button>
+
+    <h2>Conselheiros Cadastrados</h2>
+    <ul id="lista"></ul>
+
+    <a href="dashboard.html">Voltar</a>
+</div>
+
+<script src="supabase.js"></script>
+<script>
+document.getElementById('salvarBtn').addEventListener('click', async () => {
+    const nome = document.getElementById('nome').value;
+    const telefone = document.getElementById('telefone').value;
+    const email = document.getElementById('email').value;
+
+    if (!nome) return alert('Informe o nome.');
+
+    const { error } = await supabase.from('conselheiro').insert({ nome, telefone, email });
+    if (error) return alert('Erro ao salvar');
+
+    listar();
+    document.getElementById('nome').value = '';
+    document.getElementById('telefone').value = '';
+    document.getElementById('email').value = '';
+});
+
+async function listar() {
+    const { data } = await supabase.from('conselheiro').select('*').order('nome');
+    const lista = document.getElementById('lista');
+    lista.innerHTML = '';
+    data.forEach(c => lista.innerHTML += `<li>${c.nome} - ${c.telefone || ''} - ${c.email || ''}</li>`);
+}
+
+listar();
+</script>
+
+</body>
+</html>

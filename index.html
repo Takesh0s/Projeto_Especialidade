@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login - Clube de Desbravadores</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body>
+
+<div class="login-container">
+  <h1>Sistema de Gerenciamento</h1>
+  <h2>Clube de Desbravadores</h2>
+
+  <input type="email" id="email" placeholder="Email">
+  <input type="password" id="password" placeholder="Senha">
+  <button id="loginBtn">Entrar</button>
+
+  <!-- ✅ Link para cadastro -->
+  <div style="text-align:center; margin-top: 15px;">
+    <a href="cadastro.html">Não tem conta? Cadastre-se</a>
+  </div>
+</div>
+
+<script src="supabase.js"></script>
+<script>
+  const loginBtn = document.getElementById('loginBtn');
+
+  loginBtn.addEventListener('click', async () => {
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
+
+    if (!email || !password) {
+      Swal.fire('Atenção', 'Preencha todos os campos.', 'warning');
+      return;
+    }
+
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email,
+      password
+    });
+
+    if (error) {
+      Swal.fire('Erro', error.message, 'error');
+    } else {
+      window.location.href = 'dashboard.html';
+    }
+  });
+</script>
+
+</body>
+</html>

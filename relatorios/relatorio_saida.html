@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Autorização de Saída</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+</head>
+<body>
+
+<div class="dashboard-container">
+  <h1>Relatório - Autorização de Saída</h1>
+  <button id="gerarPdf">Gerar PDF</button>
+  <br><br>
+  <label for="unidade">Unidade:</label>
+  <select id="unidade"></select>
+</div>
+
+<script src="supabase.js"></script>
+<script>
+const { jsPDF } = window.jspdf;
+
+async function carregarUnidades() {
+  const { data } = await supabase.from('unidade').select('*');
+  const select = document.getElementById('unidade');
+  data.forEach(u => {
+    select.innerHTML += `<option value="${u.id}">${u.nome}</option>`;
+  });
+}
+
+document.getElementById('gerarPdf').addEventListener('click', async () => {
+  const unidadeId = document.getElementById('unidade').value;
+  if (!unidadeId) return alert('Selecione uma unidade.');
+
+  const { data: unidade } = await supabase.from('unidade').select('nome').eq('id', unidadeId).single();
+  const { data: desbravadores } = await supabase.from('desbravador').select('*').eq('unidade_id', unidadeId);
+
+  const doc = new jsPDF();
+  doc.text(`Autorização de Saída - Unidade ${unidade.nome}`, 10, 10);
+
+  let y = 20;
+  desbravadores.forEach(d => {
+    doc.text(`Nome: ${d.nome} | Contato: ${d.contato || '-'}`, 10, y);
+    y += 10;
+  });
+
+  doc.save('autorizacao_saida.pdf');
+});
+
+carregarUnidades();
+</script>
+
+</body>
+</html>

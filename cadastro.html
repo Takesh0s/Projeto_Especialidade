@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Cadastro de Usuário</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body>
+<div class="login-container">
+  <h1>Cadastro</h1>
+
+  <input type="text" id="nome" placeholder="Nome Completo">
+  <input type="email" id="email" placeholder="Email">
+  <input type="password" id="senha" placeholder="Senha">
+
+  <select id="perfil">
+    <option value="">Selecione o Perfil</option>
+    <option value="Desbravador">Desbravador</option>
+    <option value="Conselheiro">Conselheiro</option>
+    <option value="Secretário">Secretário</option>
+    <option value="Tesoureiro">Tesoureiro</option>
+    <option value="Diretor Associado">Diretor Associado</option>
+    <option value="Diretor">Diretor</option>
+  </select>
+
+  <select id="unidade">
+    <option value="">Unidade (se aplicável)</option>
+  </select>
+
+  <button id="cadastrarBtn">Cadastrar</button>
+  <a href="index.html">Já tem conta? Login</a>
+</div>
+
+<script src="supabase.js"></script>
+<script>
+const unidadeSelect = document.getElementById('unidade');
+async function carregarUnidades() {
+  const { data } = await supabase.from('unidade').select('*');
+  data.forEach(u => {
+    unidadeSelect.innerHTML += `<option value="${u.id}">${u.nome}</option>`;
+  });
+}
+carregarUnidades();
+
+document.getElementById('cadastrarBtn').addEventListener('click', async () => {
+  const nome = document.getElementById('nome').value;
+  const email = document.getElementById('email').value;
+  const senha = document.getElementById('senha').value;
+  const perfilNome = document.getElementById('perfil').value;
+  const unidade_id = document.getElementById('unidade').value;
+
+  if (!nome || !email || !senha || !perfilNome) {
+    return Swal.fire('Atenção', 'Preencha todos os campos obrigatórios.', 'warning');
+  }
+
+  const { data: signUp, error: signUpError } = await supabase.auth.signUp({
+    email,
+    password: senha
+  });
+
+  if (signUpError) return Swal.fire('Erro', signUpError.message, 'error');
+
+  const { data: perfis } = await supabase.from('perfis').select('*').eq('nome', perfilNome).single();
+
+  await supabase.from('usuarios').insert([{
+    auth_user_id: signUp.user.id,
+    nome,
+    perfil_id: perfis.id,
+    unidade_id: unidade_id || null
+  }]);
+
+  Swal.fire('Sucesso', 'Usuário cadastrado com sucesso!', 'success').then(() => {
+    window.location.href = 'index.html';
+  });
+});
+</script>
+</body>
+</html>

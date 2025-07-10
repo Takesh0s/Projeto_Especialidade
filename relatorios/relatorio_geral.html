@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Relatório Geral</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+</head>
+<body>
+
+<div class="dashboard-container">
+  <h1>Relatório Geral do Clube</h1>
+  <button id="gerarPdf">Gerar PDF</button>
+</div>
+
+<script src="supabase.js"></script>
+<script>
+const { jsPDF } = window.jspdf;
+
+document.getElementById('gerarPdf').addEventListener('click', async () => {
+  const unidades = await supabase.from('unidade').select('*');
+  const classes = await supabase.from('classe').select('*');
+  const especialidades = await supabase.from('especialidades').select('*');
+  const desbravadores = await supabase.from('desbravador').select('*, unidade(nome)');
+
+  const doc = new jsPDF();
+  let y = 10;
+
+  doc.text('Relatório Geral - Unidades', 10, y);
+  y += 10;
+  unidades.data.forEach(u => doc.text(`- ${u.nome}`, 10, y += 10));
+
+  y += 20;
+  doc.text('Classes', 10, y);
+  classes.data.forEach(c => doc.text(`- ${c.nome}: ${c.descricao}`, 10, y += 10));
+
+  y += 20;
+  doc.text('Especialidades', 10, y);
+  especialidades.data.forEach(e => doc.text(`- ${e.nome}: ${e.descricao}`, 10, y += 10));
+
+  y += 20;
+  doc.text('Desbravadores', 10, y);
+  desbravadores.data.forEach(d => {
+    doc.text(`- ${d.nome} (Unidade: ${d.unidade?.nome || 'N/A'})`, 10, y += 10);
+  });
+
+  doc.save('relatorio_geral.pdf');
+});
+</script>
+
+</body>
+</html>

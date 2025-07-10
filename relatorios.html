@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Relatórios</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .relatorio-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+      margin-top: 20px;
+    }
+
+    .relatorio-link {
+      display: block;
+      text-align: center;
+      padding: 15px;
+      background-color: #006400;
+      color: white;
+      text-decoration: none;
+      border-radius: 8px;
+      font-weight: bold;
+      box-shadow: 2px 2px 5px rgba(0,0,0,0.2);
+      transition: background-color 0.2s ease;
+    }
+
+    .relatorio-link:hover {
+      background-color: #008000;
+    }
+
+    .dashboard-container {
+      max-width: 600px;
+      margin: 0 auto;
+      background: #fff;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    .dashboard-container h1 {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .voltar {
+      display: block;
+      text-align: center;
+      margin-top: 30px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="dashboard-container">
+  <h1>Relatórios do Clube</h1>
+
+  <div class="relatorio-grid">
+    <a href="relatorios/relatorio_saida.html" class="relatorio-link">Autorização de Saída</a>
+    <a href="relatorios/relatorio_fluxo_caixa.html" class="relatorio-link">Fluxo de Caixa</a>
+    <a href="relatorios/relatorio_patrimonio.html" class="relatorio-link">Patrimônio</a>
+    <a href="relatorios/relatorio_atas_atos.html" class="relatorio-link">Livro de Atas e Atos</a>
+    <a href="relatorios/relatorio_mensalidades.html" class="relatorio-link">Mensalidades</a>
+    <a href="relatorios/relatorio_geral.html" class="relatorio-link">Relatório Geral</a>
+  </div>
+
+  <a class="voltar" href="dashboard.html">Voltar ao Menu</a>
+</div>
+
+</body>
+</html>

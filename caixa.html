@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Controle de Caixa</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body>
+
+<div class="dashboard-container">
+    <h1>Controle de Caixa</h1>
+
+    <select id="tipo">
+        <option value="">Tipo</option>
+        <option value="entrada">Entrada</option>
+        <option value="saida">Saída</option>
+    </select>
+
+    <input type="text" id="descricao" placeholder="Descrição">
+    <input type="number" id="valor" placeholder="Valor (R$)" min="0" step="0.01">
+
+    <button id="registrarMovimentacao">Registrar</button>
+
+    <h2>Movimentações</h2>
+    <table id="tabelaCaixa">
+        <thead>
+            <tr>
+                <th>Tipo</th>
+                <th>Descrição</th>
+                <th>Valor</th>
+                <th>Data</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+
+    <br>
+    <a href="dashboard.html">Voltar ao Menu</a>
+</div>
+
+<script src="supabase.js"></script>
+<script>
+    supabase.auth.getSession().then(({ data }) => {
+        if (!data.session) {
+            window.location.href = 'index.html';
+        }
+    });
+
+    const tabelaCorpo = document.querySelector('#tabelaCaixa tbody');
+
+    async function carregarCaixa() {
+        const { data, error } = await supabase.from('caixa').select('*').order('data', { ascending: false });
+
+        tabelaCorpo.innerHTML = '';
+        if (data) {
+            data.forEach(c => {
+                const linha = `<tr>
+                    <td>${c.tipo}</td>
+                    <td>${c.descricao}</td>
+                    <td>R$ ${parseFloat(c.valor).toFixed(2)}</td>
+                    <td>${c.data}</td>
+                </tr>`;
+                tabelaCorpo.innerHTML += linha;
+            });
+        }
+    }
+
+    document.getElementById('registrarMovimentacao').addEventListener('click', async () => {
+        const tipo = document.getElementById('tipo').value;
+        const descricao = document.getElementById('descricao').value;
+        const valor = parseFloat(document.getElementById('valor').value);
+
+        if (!tipo || !descricao || isNaN(valor)) {
+            Swal.fire('Atenção', 'Preencha todos os campos corretamente.', 'warning');
+            return;
+        }
+
+        const { error } = await supabase.from('caixa').insert([
+            { tipo, descricao, valor }
+        ]);
+
+        if (error) {
+            Swal.fire('Erro', error.message, 'error');
+        } else {
+            Swal.fire('Sucesso', 'Movimentação registrada.', 'success');
+            document.getElementById('tipo').value = '';
+            document.getElementById('descricao').value = '';
+            document.getElementById('valor').value = '';
+            carregarCaixa();
+        }
+    });
+
+    carregarCaixa();
+</script>
+
+</body>
+</html>

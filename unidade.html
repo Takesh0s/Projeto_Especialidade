@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Cadastro de Unidades</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body>
+
+<div class="dashboard-container">
+    <h1>Cadastro de Unidades</h1>
+
+    <input type="text" id="nomeUnidade" placeholder="Nome da Unidade">
+
+    <h3>Conselheiro Titular</h3>
+    <select id="conselheiroSelect">
+        <option value="">Selecione o Conselheiro</option>
+    </select>
+
+    <h3>Associado 1</h3>
+    <select id="associado1Select">
+        <option value="">Selecione o Associado</option>
+    </select>
+
+    <h3>Associado 2</h3>
+    <select id="associado2Select">
+        <option value="">Selecione o Associado</option>
+    </select>
+
+    <button id="cadastrarUnidade">Cadastrar</button>
+
+    <h2>Unidades Cadastradas</h2>
+    <table id="tabelaUnidades">
+        <thead>
+            <tr>
+                <th>Nome</th>
+                <th>Conselheiro</th>
+                <th>Associado 1</th>
+                <th>Associado 2</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+
+    <br>
+    <a href="dashboard.html">Voltar ao Menu</a>
+</div>
+
+<script src="supabase.js"></script>
+<script>
+const conselheiroSelect = document.getElementById('conselheiroSelect');
+const associado1Select = document.getElementById('associado1Select');
+const associado2Select = document.getElementById('associado2Select');
+const tabelaCorpo = document.querySelector('#tabelaUnidades tbody');
+
+async function carregarConselheiros() {
+    const { data } = await supabase.from('conselheiro').select('*').order('nome');
+    [conselheiroSelect, associado1Select, associado2Select].forEach(select => {
+        select.innerHTML = '<option value="">Selecione</option>';
+        data.forEach(c => {
+            select.innerHTML += `<option value="${c.id}">${c.nome}</option>`;
+        });
+    });
+}
+
+async function listarUnidades() {
+    const { data } = await supabase.from('unidade')
+        .select(`*, conselheiro:conselheiro_id (nome), associado1:associado1_id (nome), associado2:associado2_id (nome)`);
+
+    tabelaCorpo.innerHTML = '';
+    data.forEach(u => {
+        tabelaCorpo.innerHTML += `<tr>
+            <td>${u.nome}</td>
+            <td>${u.conselheiro?.nome || '-'}</td>
+            <td>${u.associado1?.nome || '-'}</td>
+            <td>${u.associado2?.nome || '-'}</td>
+        </tr>`;
+    });
+}
+
+document.getElementById('cadastrarUnidade').addEventListener('click', async () => {
+    const nome = document.getElementById('nomeUnidade').value;
+    const conselheiro_id = conselheiroSelect.value;
+    const associado1_id = associado1Select.value;
+    const associado2_id = associado2Select.value;
+
+    if (!nome || !conselheiro_id) {
+        Swal.fire('Atenção', 'Informe o nome da unidade e o conselheiro titular.', 'warning');
+        return;
+    }
+
+    const { error } = await supabase.from('unidade').insert([
+        { nome, conselheiro_id, associado1_id, associado2_id }
+    ]);
+
+    if (error) {
+        Swal.fire('Erro', error.message, 'error');
+    } else {
+        Swal.fire('Sucesso', 'Unidade cadastrada.', 'success');
+        document.getElementById('nomeUnidade').value = '';
+        listarUnidades();
+    }
+});
+
+carregarConselheiros();
+listarUnidades();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Relatório de Patrimônio</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body>
+
+<div class="dashboard-container">
+    <h1>Relatório de Patrimônio</h1>
+    <button id="gerarPdf">Gerar PDF</button>
+    <br><br>
+    <table id="tabelaPatrimonio">
+        <thead>
+            <tr>
+                <th>Item</th>
+                <th>Quantidade</th>
+                <th>Estado</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+
+    <br>
+    <a href="dashboard.html">Voltar ao Menu</a>
+</div>
+
+<script src="supabase.js"></script>
+<script>
+    supabase.auth.getSession().then(({ data }) => {
+        if (!data.session) {
+            window.location.href = 'index.html';
+        }
+    });
+
+    const tabelaCorpo = document.querySelector('#tabelaPatrimonio tbody');
+
+    async function carregarPatrimonio() {
+        const { data, error } = await supabase.from('patrimonio').select('*');
+        if (error) {
+            console.error(error);
+            return;
+        }
+
+        tabelaCorpo.innerHTML = '';
+        data.forEach(p => {
+            tabelaCorpo.innerHTML += `<tr>
+                <td>${p.item}</td>
+                <td>${p.quantidade}</td>
+                <td>${p.estado}</td>
+            </tr>`;
+        });
+    }
+
+    document.getElementById('gerarPdf').addEventListener('click', () => {
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF();
+
+        doc.text('Relatório de Patrimônio - Clube de Desbravadores', 10, 10);
+
+        let y = 20;
+        const linhas = document.querySelectorAll('#tabelaPatrimonio tbody tr');
+        linhas.forEach(linha => {
+            const colunas = linha.querySelectorAll('td');
+            doc.text(`Item: ${colunas[0].innerText} | Quantidade: ${colunas[1].innerText} | Estado: ${colunas[2].innerText}`, 10, y);
+            y += 10;
+        });
+
+        doc.save('relatorio_patrimonio.pdf');
+    });
+
+    carregarPatrimonio();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Livro de Atas e Atos</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+</head>
+<body>
+
+<div class="dashboard-container">
+  <h1>Livro de Atas e Atos</h1>
+  <button id="gerarPdf">Gerar PDF</button>
+</div>
+
+<script src="supabase.js"></script>
+<script>
+const { jsPDF } = window.jspdf;
+
+document.getElementById('gerarPdf').addEventListener('click', async () => {
+  const atas = await supabase.from('atas').select('*').order('data', { ascending: true });
+  const atos = await supabase.from('atos').select('*').order('data', { ascending: true });
+
+  const doc = new jsPDF();
+  doc.text('Livro de Atas e Atos', 10, 10);
+
+  let y = 20;
+  atas.data.forEach(a => {
+    doc.text(`[ATA] ${a.data} - ${a.titulo}`, 10, y);
+    y += 10;
+  });
+
+  atos.data.forEach(a => {
+    doc.text(`[ATO] ${a.data} - ${a.titulo}`, 10, y);
+    y += 10;
+  });
+
+  doc.save('livro_atas_atos.pdf');
+});
+</script>
+
+</body>
+</html>

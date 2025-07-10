@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Cadastro de Desbravadores</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+</head>
+<body>
+
+<div class="dashboard-container">
+    <h1>Cadastro de Desbravadores</h1>
+
+    <input type="text" id="nome" placeholder="Nome do Desbravador">
+    <input type="date" id="dataNascimento">
+    <input type="text" id="contato" placeholder="Contato">
+
+    <select id="unidadeSelect">
+        <option value="">Selecione a Unidade</option>
+    </select>
+
+    <select id="classeSelect">
+        <option value="">Selecione a Classe</option>
+    </select>
+
+    <h3>Especialidades</h3>
+    <div id="especialidadesLista"></div>
+
+    <button id="cadastrarDesbravador">Cadastrar</button>
+
+    <h2>Lista de Desbravadores</h2>
+    <table id="tabelaDesbravadores">
+        <thead>
+            <tr>
+                <th>Nome</th>
+                <th>Data Nascimento</th>
+                <th>Contato</th>
+                <th>Unidade</th>
+                <th>Classe</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+
+    <br>
+    <a href="dashboard.html">Voltar</a>
+</div>
+
+<script src="supabase.js"></script>
+<script>
+const unidadeSelect = document.getElementById('unidadeSelect');
+const classeSelect = document.getElementById('classeSelect');
+const especialidadesLista = document.getElementById('especialidadesLista');
+const tabelaCorpo = document.querySelector('#tabelaDesbravadores tbody');
+
+async function carregarUnidades() {
+    const { data } = await supabase.from('unidade').select('*');
+    unidadeSelect.innerHTML = '<option value="">Selecione</option>';
+    data.forEach(u => unidadeSelect.innerHTML += `<option value="${u.id}">${u.nome}</option>`);
+}
+
+async function carregarClasses() {
+    const { data } = await supabase.from('classe').select('*');
+    classeSelect.innerHTML = '<option value="">Selecione</option>';
+    data.forEach(c => classeSelect.innerHTML += `<option value="${c.id}">${c.nome}</option>`);
+}
+
+async function carregarEspecialidades() {
+    const { data } = await supabase.from('especialidades').select('*');
+    especialidadesLista.innerHTML = '';
+    data.forEach(e => {
+        especialidadesLista.innerHTML += `
+            <label>
+                <input type="checkbox" value="${e.id}"> ${e.nome}
+            </label><br>
+        `;
+    });
+}
+
+async function listarDesbravadores() {
+    const { data } = await supabase.from('desbravador')
+        .select('*, unidade(nome), classe(nome)').order('nome');
+
+    tabelaCorpo.innerHTML = '';
+    data.forEach(d => {
+        tabelaCorpo.innerHTML += `<tr>
+            <td>${d.nome}</td>
+            <td>${d.data_nascimento || '-'}</td>
+            <td>${d.contato || '-'}</td>
+            <td>${d.unidade?.nome || '-'}</td>
+            <td>${d.classe?.nome || '-'}</td>
+        </tr>`;
+    });
+}
+
+document.getElementById('cadastrarDesbravador').addEventListener('click', async () => {
+    const nome = document.getElementById('nome').value;
+    const data_nascimento = document.getElementById('dataNascimento').value;
+    const contato = document.getElementById('contato').value;
+    const unidade_id = unidadeSelect.value;
+    const classe_id = classeSelect.value;
+
+    if (!nome || !unidade_id || !classe_id) {
+        Swal.fire('Atenção', 'Preencha nome, unidade e classe.', 'warning');
+        return;
+    }
+
+    const { data, error } = await supabase.from('desbravador')
+        .insert([{ nome, data_nascimento, contato, unidade_id, classe_id }])
+        .select().single();
+
+    if (error) return Swal.fire('Erro', 'Ocorreu um problema ao salvar.', 'error');;
+
+    const checkboxes = document.querySelectorAll('#especialidadesLista input:checked');
+    for (let c of checkboxes) {
+        await supabase.from('desbravador_especialidade').insert({
+            desbravador_id: data.id,
+            especialidade_id: c.value
+        });
+    }
+
+    Swal.fire('Sucesso', 'Desbravador cadastrado.', 'success');
+    document.getElementById('nome').value = '';
+    document.getElementById('dataNascimento').value = '';
+    document.getElementById('contato').value = '';
+    listarDesbravadores();
+});
+
+carregarUnidades();
+carregarClasses();
+carregarEspecialidades();
+listarDesbravadores();
+</script>
+
+</body>
+</html>

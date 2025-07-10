@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Fluxo de Caixa</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+</head>
+<body>
+
+<div class="dashboard-container">
+  <h1>Relatório - Fluxo de Caixa</h1>
+  <button id="gerarPdf">Gerar PDF</button>
+</div>
+
+<script src="supabase.js"></script>
+<script>
+const { jsPDF } = window.jspdf;
+
+document.getElementById('gerarPdf').addEventListener('click', async () => {
+  const { data } = await supabase.from('caixa').select('*').order('data', { ascending: true });
+
+  const doc = new jsPDF();
+  doc.text('Relatório de Fluxo de Caixa', 10, 10);
+
+  let totalEntrada = 0, totalSaida = 0, y = 20;
+  data.forEach(c => {
+    doc.text(`${c.data} | ${c.tipo.toUpperCase()} | ${c.descricao} | R$ ${c.valor.toFixed(2)}`, 10, y);
+    c.tipo === 'entrada' ? totalEntrada += c.valor : totalSaida += c.valor;
+    y += 10;
+  });
+
+  doc.text(`Total Entradas: R$ ${totalEntrada.toFixed(2)}`, 10, y + 10);
+  doc.text(`Total Saídas: R$ ${totalSaida.toFixed(2)}`, 10, y + 20);
+  doc.text(`Saldo Final: R$ ${(totalEntrada - totalSaida).toFixed(2)}`, 10, y + 30);
+
+  doc.save('fluxo_caixa.pdf');
+});
+</script>
+
+</body>
+</html>

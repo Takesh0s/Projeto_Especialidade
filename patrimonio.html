@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Controle de Patrimônio</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body>
+
+<div class="dashboard-container">
+    <h1>Controle de Patrimônio</h1>
+
+    <input type="text" id="item" placeholder="Nome do Item">
+    <input type="number" id="quantidade" placeholder="Quantidade" min="1">
+    <input type="text" id="estado" placeholder="Estado (Novo, Usado, etc)">
+
+    <button id="cadastrarPatrimonio">Cadastrar</button>
+
+    <h2>Itens de Patrimônio</h2>
+    <table id="tabelaPatrimonio">
+        <thead>
+            <tr>
+                <th>Item</th>
+                <th>Quantidade</th>
+                <th>Estado</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+
+    <br>
+    <a href="dashboard.html">Voltar ao Menu</a>
+</div>
+
+<script src="supabase.js"></script>
+<script>
+    supabase.auth.getSession().then(({ data }) => {
+        if (!data.session) {
+            window.location.href = 'index.html';
+        }
+    });
+
+    const tabelaCorpo = document.querySelector('#tabelaPatrimonio tbody');
+
+    async function carregarPatrimonio() {
+        const { data, error } = await supabase.from('patrimonio').select('*');
+
+        tabelaCorpo.innerHTML = '';
+        if (data) {
+            data.forEach(p => {
+                const linha = `<tr>
+                    <td>${p.item}</td>
+                    <td>${p.quantidade}</td>
+                    <td>${p.estado}</td>
+                </tr>`;
+                tabelaCorpo.innerHTML += linha;
+            });
+        }
+    }
+
+    document.getElementById('cadastrarPatrimonio').addEventListener('click', async () => {
+        const item = document.getElementById('item').value;
+        const quantidade = parseInt(document.getElementById('quantidade').value);
+        const estado = document.getElementById('estado').value;
+
+        if (!item || !quantidade || !estado) {
+            Swal.fire('Atenção', 'Preencha todos os campos.', 'warning');
+            return;
+        }
+
+        const { error } = await supabase.from('patrimonio').insert([
+            { item, quantidade, estado }
+        ]);
+
+        if (error) {
+            Swal.fire('Erro', error.message, 'error');
+        } else {
+            Swal.fire('Sucesso', 'Item cadastrado.', 'success');
+            document.getElementById('item').value = '';
+            document.getElementById('quantidade').value = '';
+            document.getElementById('estado').value = '';
+            carregarPatrimonio();
+        }
+    });
+
+    carregarPatrimonio();
+</script>
+
+</body>
+</html>

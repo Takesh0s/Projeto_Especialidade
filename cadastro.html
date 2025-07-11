@@ -121,7 +121,7 @@
 
   function loginComGoogle() {
   const baseUrl = window.location.origin.includes("localhost")
-    ? "http://localhost:3000"
+    ? "http://localhost:8080"
     : window.location.origin;
 
   supabase.auth.signInWithOAuth({

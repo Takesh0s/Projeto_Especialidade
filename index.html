@@ -127,13 +127,23 @@
   });
 
   function loginComGoogle() {
-    supabase.auth.signInWithOAuth({
-      provider: "google",
-      options: {
-        redirectTo: window.location.origin + "/dashboard.html"
-      }
+  const baseUrl = window.location.origin.includes("localhost")
+    ? "http://localhost:3000"
+    : window.location.origin;
+
+  supabase.auth.signInWithOAuth({
+    provider: "google",
+    options: {
+      redirectTo: baseUrl + "/dashboard.html"
+    }
     });
   }
+
+  supabase.auth.getUser().then(({ data: { user } }) => {
+    if (user) {
+      window.location.href = "dashboard.html";
+    }
+  });
 </script>
 
 </body>

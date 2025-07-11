@@ -1,29 +1,31 @@
-Estrutura de pastas e arquivos (primeiro e único que você mandou):
+Estrutura de pastas e arquivos:
 Projeto_Especialidade/
-├── index.html                # Tela de Login 
-├── dashboard.html            # Menu principal
-├── especialidades.html       # Cadastro de Especialidades
-├── classes.html              # Cadastro de Classes
-├── desbravadores.html        # Cadastro de Desbravadores
-├── mensalidade.html          # Controle de Mensalidade
-├── caixa.html                # Controle de Caixa
-├── patrimonio.html           # Controle de Patrimônio
-├── atas_atos.html            # Controle de Atas e Atos
+├── index.html
+├── cadastro.html
+├── dashboard.html
+├── especialidades.html
+├── classes.html
+├── desbravadores.html
+├── mensalidade.html
+├── caixa.html
+├── patrimonio.html
+├── atas_atos.html
 ├── relatorios.html
-├── style.css                 # Estilos globais
-├── supabase.js               # Configuração da conexão Supabase
-├── /relatorios/             → Scripts para geração de PDF e relatórios específicos
-│   ├── relatorio_geral.js
-│   ├── relatorio_unidades.js
-│   ├── relatorio_desbravadores.js
-│   ├── relatorio_caixa.js
-│   ├── relatorio_patrimonio.js
-│   ├── relatorio_atas_atos.js
-│   ├── relatorio_mensalidade.js
-├── /img/                    → Imagens do sistema
-│   ├── logo.png
-│   ├── fundo_login.png
-├── README.md                → Documentação de uso
+├── style.css
+├── supabase.js
+├── /relatorios/
+│    ├── relatorio_geral.js
+│    ├── relatorio_unidades.js
+│    ├── relatorio_desbravadores.js
+│    ├── relatorio_caixa.js
+│    ├── relatorio_patrimonio.js
+│    ├── relatorio_atas_atos.js
+│    ├── relatorio_mensalidade.js
+├── /img/
+│    ├── logo.png
+│    ├── fundo_login.png
+├── informacoes_projeto_especialidade.txt
+├── README.md
 
 
 SQL na supabase: "
@@ -160,79 +162,6 @@ index.html: "
   <link rel="stylesheet" href="style.css" />
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-  <style>
-    .login-container {
-      max-width: 400px;
-      margin: 40px auto;
-      padding: 30px;
-      background-color: #fff;
-      border-radius: 10px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
-      text-align: center;
-    }
-
-    .login-container h1 {
-      font-size: 24px;
-      margin-bottom: 10px;
-    }
-
-    .login-container h2 {
-      font-size: 18px;
-      margin-bottom: 30px;
-    }
-
-    input {
-      width: 100%;
-      padding: 10px;
-      margin-bottom: 15px;
-      border-radius: 5px;
-      border: 1px solid #ccc;
-    }
-
-    button {
-      width: 100%;
-      padding: 10px;
-      background-color: #006400;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      font-weight: bold;
-      cursor: pointer;
-      margin-bottom: 15px;
-    }
-
-    button:hover {
-      background-color: #008000;
-    }
-
-    .login-divider {
-      font-weight: bold;
-      margin: 20px 0 10px;
-    }
-
-    .login-icons {
-      display: flex;
-      justify-content: center;
-      gap: 15px;
-      margin-bottom: 20px;
-    }
-
-    .login-icon {
-      width: 40px;
-      height: 40px;
-      cursor: pointer;
-      transition: transform 0.2s ease;
-    }
-
-    .login-icon:hover {
-      transform: scale(1.1);
-    }
-
-    a {
-      text-decoration: none;
-      color: #800080;
-    }
-  </style>
 </head>
 <body>
 
@@ -280,13 +209,23 @@ index.html: "
   });
 
   function loginComGoogle() {
-    supabase.auth.signInWithOAuth({
-      provider: "google",
-      options: {
-        redirectTo: window.location.origin + "/dashboard.html"
-      }
+  const baseUrl = window.location.origin.includes("localhost")
+    ? "http://localhost:8080"
+    : window.location.origin;
+
+  supabase.auth.signInWithOAuth({
+    provider: "google",
+    options: {
+      redirectTo: baseUrl + "/dashboard.html"
+    }
     });
   }
+
+  supabase.auth.getUser().then(({ data: { user } }) => {
+    if (user) {
+      window.location.href = "dashboard.html";
+    }
+  });
 </script>
 
 </body>
@@ -303,69 +242,6 @@ cadastro.html: "
   <link rel="stylesheet" href="style.css" />
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-  <style>
-    .login-container {
-      max-width: 400px;
-      margin: 40px auto;
-      padding: 30px;
-      background-color: #fff;
-      border-radius: 10px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
-      text-align: center;
-    }
-
-    input {
-      width: 100%;
-      padding: 10px;
-      margin-bottom: 15px;
-      border-radius: 5px;
-      border: 1px solid #ccc;
-    }
-
-    button {
-      width: 100%;
-      padding: 10px;
-      background-color: #006400;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      font-weight: bold;
-      cursor: pointer;
-      margin-bottom: 15px;
-    }
-
-    button:hover {
-      background-color: #008000;
-    }
-
-    .login-divider {
-      font-weight: bold;
-      margin: 20px 0 10px;
-    }
-
-    .login-icons {
-      display: flex;
-      justify-content: center;
-      gap: 15px;
-      margin-bottom: 20px;
-    }
-
-    .login-icon {
-      width: 40px;
-      height: 40px;
-      cursor: pointer;
-      transition: transform 0.2s ease;
-    }
-
-    .login-icon:hover {
-      transform: scale(1.1);
-    }
-
-    a {
-      text-decoration: none;
-      color: #800080;
-    }
-  </style>
 </head>
 <body>
 
@@ -416,10 +292,14 @@ cadastro.html: "
   });
 
   function loginComGoogle() {
-    supabase.auth.signInWithOAuth({
-      provider: "google",
-      options: {
-        redirectTo: window.location.origin + "/dashboard.html"
+  const baseUrl = window.location.origin.includes("localhost")
+    ? "http://localhost:8080"
+    : window.location.origin;
+
+  supabase.auth.signInWithOAuth({
+    provider: "google",
+    options: {
+      redirectTo: baseUrl + "/dashboard.html"
       }
     });
   }
@@ -431,74 +311,149 @@ cadastro.html: "
 
 style.css: "
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f0f2f5;
+    margin: 0;
+    padding: 0;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #f0f4f8, #d9e2ec);
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
 }
 
-.login-container {
-    background: white;
-    padding: 30px;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+a {
+    text-decoration: none;
+    color: #800080;
+    transition: color 0.2s ease;
+}
+
+a:hover {
+    color: #5a005a;
+}
+
+.container, 
+.dashboard-container {
+    background: #fff;
+    padding: 40px 30px;
+    border-radius: 15px;
+    box-shadow: 0 15px 30px rgba(0,0,0,0.1);
     text-align: center;
-    width: 300px;
+    width: 350px;
+    transition: all 0.3s ease;
+}
+
+.container:hover,
+.dashboard-container:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+}
+
+h1 {
+    font-size: 24px;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+h2 {
+    font-size: 18px;
+    margin-bottom: 25px;
+    color: #555;
 }
 
 input {
     width: 100%;
-    padding: 10px;
-    margin: 10px 0;
-    border-radius: 5px;
+    padding: 12px;
+    margin-bottom: 15px;
+    border-radius: 8px;
     border: 1px solid #ccc;
+    transition: border-color 0.2s;
+}
+
+input:focus {
+    border-color: #006400;
+    outline: none;
 }
 
 button {
     width: 100%;
-    padding: 10px;
-    background-color: #006400;
+    padding: 12px;
+    margin: 10px 0;
+    background: linear-gradient(135deg, #007b33, #00a74f);
     color: white;
     border: none;
-    border-radius: 5px;
+    border-radius: 8px;
+    font-size: 16px;
     cursor: pointer;
+    transition: all 0.2s ease;
+    font-weight: 600;
 }
 
 button:hover {
-    background-color: #004d00;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 167, 79, 0.4);
 }
 
-.dashboard-container {
-    max-width: 400px;
-    background: white;
-    padding: 30px;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.1);
-    text-align: center;
-    margin: 30px auto;
+button:focus {
+    outline: none;
 }
 
-.menu {
+.login-icons {
     display: flex;
-    flex-direction: column;
-    gap: 10px;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 20px;
 }
 
-.menu a, .menu button {
-    padding: 10px;
-    text-decoration: none;
-    background-color: #006400;
-    color: white;
-    border: none;
-    border-radius: 5px;
+.login-icon {
+    width: 40px;
+    height: 40px;
     cursor: pointer;
-    display: block;
+    transition: transform 0.2s ease;
 }
 
-.menu a:hover, .menu button:hover {
-    background-color: #004d00;
+.login-icon:hover {
+    transform: scale(1.1);
+}
+
+.relatorio-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.relatorio-link {
+    display: block;
+    text-align: center;
+    padding: 15px;
+    background: linear-gradient(135deg, #007b33, #00a74f);
+    color: white;
+    font-weight: bold;
+    border-radius: 8px;
+    box-shadow: 2px 2px 8px rgba(0,0,0,0.15);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.relatorio-link:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 167, 79, 0.4);
+}
+
+.logo-img {
+    width: 120px;
+    margin: 15px 0 25px 0;
+}
+
+.voltar {
+    display: block;
+    text-align: center;
+    margin-top: 30px;
+    color: #007b33;
+    font-weight: bold;
+}
+
+.voltar:hover {
+    text-decoration: underline;
 }
 "
 
@@ -872,43 +827,33 @@ dashboard.html: "
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Painel - Clube de Desbravadores</title>
-    <link rel="stylesheet" href="style.css">
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Painel de Controle - Clube de Desbravadores</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
 <div class="dashboard-container">
-    <h1>Painel de Controle</h1>
-    <h2>Clube de Desbravadores</h2>
+  <h1>Painel de Controle</h1>
+  <img src="img/logo-desbravadores.png" alt="Logo Desbravadores" class="logo-img" />
 
-    <div class="menu">
-        <a href="unidade.html">Gestão de Unidades</a>
-        <a href="desbravador.html">Gestão de Desbravadores</a>
-        <a href="mensalidade.html">Mensalidades</a>
-        <a href="patrimonio.html">Patrimônio</a>
-        <a href="atas_atos.html">Atas e Atos</a>
-        <a href="caixa.html">Caixa</a>
-        <a href="relatorios.html">Relatórios</a>
-        <button id="logoutBtn">Sair</button>
-    </div>
+  <button onclick="window.location.href='unidade.html'">Gestão de Unidades</button>
+  <button onclick="window.location.href='desbravador.html'">Gestão de Desbravadores</button>
+  <button onclick="window.location.href='mensalidade.html'">Mensalidades</button>
+  <button onclick="window.location.href='patrimonio.html'">Patrimônio</button>
+  <button onclick="window.location.href='atas_atos.html'">Atas e Atos</button>
+  <button onclick="window.location.href='caixa.html'">Caixa</button>
+  <button onclick="window.location.href='relatorios.html'">Relatórios</button>
+  <button onclick="logout()">Sair</button>
 </div>
 
 <script src="supabase.js"></script>
 <script>
-    supabase.auth.getSession().then(({ data }) => {
-        if (!data.session) {
-            window.location.href = 'index.html';
-        }
-    });
-
-    const logoutBtn = document.getElementById('logoutBtn');
-    logoutBtn.addEventListener('click', async () => {
-        await supabase.auth.signOut();
-        window.location.href = 'index.html';
-    });
+  async function logout() {
+    await supabase.auth.signOut();
+    window.location.href = "index.html";
+  }
 </script>
 
 </body>
@@ -1246,52 +1191,7 @@ relatorios.html: "
 <head>
   <meta charset="UTF-8">
   <title>Relatórios</title>
-  <link rel="stylesheet" href="style.css">
-  <style>
-    .relatorio-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 20px;
-      margin-top: 20px;
-    }
-
-    .relatorio-link {
-      display: block;
-      text-align: center;
-      padding: 15px;
-      background-color: #006400;
-      color: white;
-      text-decoration: none;
-      border-radius: 8px;
-      font-weight: bold;
-      box-shadow: 2px 2px 5px rgba(0,0,0,0.2);
-      transition: background-color 0.2s ease;
-    }
-
-    .relatorio-link:hover {
-      background-color: #008000;
-    }
-
-    .dashboard-container {
-      max-width: 600px;
-      margin: 0 auto;
-      background: #fff;
-      padding: 30px;
-      border-radius: 10px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
-    }
-
-    .dashboard-container h1 {
-      text-align: center;
-      margin-bottom: 30px;
-    }
-
-    .voltar {
-      display: block;
-      text-align: center;
-      margin-top: 30px;
-    }
-  </style>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
@@ -1309,90 +1209,6 @@ relatorios.html: "
 
   <a class="voltar" href="dashboard.html">Voltar ao Menu</a>
 </div>
-
-</body>
-</html>
-"
-
-relatorios/relatorio_patrimonio.html: "
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Relatório de Patrimônio</title>
-    <link rel="stylesheet" href="style.css">
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-</head>
-<body>
-
-<div class="dashboard-container">
-    <h1>Relatório de Patrimônio</h1>
-    <button id="gerarPdf">Gerar PDF</button>
-    <br><br>
-    <table id="tabelaPatrimonio">
-        <thead>
-            <tr>
-                <th>Item</th>
-                <th>Quantidade</th>
-                <th>Estado</th>
-            </tr>
-        </thead>
-        <tbody></tbody>
-    </table>
-
-    <br>
-    <a href="dashboard.html">Voltar ao Menu</a>
-</div>
-
-<script src="supabase.js"></script>
-<script>
-    supabase.auth.getSession().then(({ data }) => {
-        if (!data.session) {
-            window.location.href = 'index.html';
-        }
-    });
-
-    const tabelaCorpo = document.querySelector('#tabelaPatrimonio tbody');
-
-    async function carregarPatrimonio() {
-        const { data, error } = await supabase.from('patrimonio').select('*');
-        if (error) {
-            console.error(error);
-            return;
-        }
-
-        tabelaCorpo.innerHTML = '';
-        data.forEach(p => {
-            tabelaCorpo.innerHTML += `<tr>
-                <td>${p.item}</td>
-                <td>${p.quantidade}</td>
-                <td>${p.estado}</td>
-            </tr>`;
-        });
-    }
-
-    document.getElementById('gerarPdf').addEventListener('click', () => {
-        const { jsPDF } = window.jspdf;
-        const doc = new jsPDF();
-
-        doc.text('Relatório de Patrimônio - Clube de Desbravadores', 10, 10);
-
-        let y = 20;
-        const linhas = document.querySelectorAll('#tabelaPatrimonio tbody tr');
-        linhas.forEach(linha => {
-            const colunas = linha.querySelectorAll('td');
-            doc.text(`Item: ${colunas[0].innerText} | Quantidade: ${colunas[1].innerText} | Estado: ${colunas[2].innerText}`, 10, y);
-            y += 10;
-        });
-
-        doc.save('relatorio_patrimonio.pdf');
-    });
-
-    carregarPatrimonio();
-</script>
 
 </body>
 </html>

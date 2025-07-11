@@ -10,27 +10,32 @@
 </head>
 <body>
 
-<div class="login-container">
-  <h1>Sistema Virtual de Gerenciamento</h1>
-  <h2>Clube de Desbravadores</h2>
+<div class="auth-wrapper">
+  <div class="auth-card">
+    <h1>Sistema Virtual</h1>
+    <h2>Clube de Desbravadores</h2>
 
-  <input type="email" id="email" placeholder="Email" />
-  <input type="password" id="password" placeholder="Senha" />
-  <button id="loginBtn">Entrar</button>
+    <div class="input-group">
+      <input type="email" id="email" placeholder="Digite seu email" />
+      <span class="input-icon">📧</span>
+    </div>
 
-  <div class="login-divider">Entrar com</div>
+    <div class="input-group">
+      <input type="password" id="password" placeholder="Digite sua senha" />
+      <span class="input-icon">🔒</span>
+    </div>
 
-  <div class="login-icons">
-    <svg class="login-icon" onclick="loginComGoogle()" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 533.5 544.3">
-      <title>Entrar com Google</title>
-      <path fill="#4285f4" d="M533.5 278.4c0-17.4-1.6-34-4.6-50.2H272v95h147.3c-6.3 34.1-25.2 63.1-53.8 82.4l87 67c50.6-46.7 80-115.4 80-194.2z"/>
-      <path fill="#34a853" d="M272 544.3c72.6 0 133.6-23.9 178.2-64.9l-87-67c-24.2 16.2-55 25.7-91.2 25.7-69.9 0-129.2-47.2-150.3-110.4l-89.3 69.2c43.5 85.5 132.6 147.4 239.6 147.4z"/>
-      <path fill="#fbbc04" d="M121.7 327.7c-10.3-30.1-10.3-62.5 0-92.6l-89.3-69.2c-38.9 76.2-38.9 165.8 0 242z"/>
-      <path fill="#ea4335" d="M272 107.7c39.5-.6 77.4 14.3 106.4 41.4l79.5-79.5C406.8 24 341.7 0 272 0 165 0 75.9 61.9 32.4 147.4l89.3 69.2c21-63.2 80.4-110.4 150.3-110.4z"/>
-    </svg>
+    <button id="loginBtn">Entrar</button>
+
+    <div class="divider">ou</div>
+
+    <div class="google-login" onclick="loginComGoogle()">
+      <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/google/google-original.svg" alt="Google Icon" />
+      <span>Entrar com Google</span>
+    </div>
+
+    <p class="register-text">Ainda não tem conta? <a href="cadastro.html">Cadastre-se aqui</a></p>
   </div>
-
-  <p>Ainda não tem conta? <a href="cadastro.html">Cadastre-se aqui</a></p>
 </div>
 
 <script src="supabase.js"></script>
@@ -44,7 +49,7 @@
       return;
     }
 
-    const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+    const { error } = await supabase.auth.signInWithPassword({ email, password });
 
     if (error) {
       Swal.fire("Erro", error.message, "error");
@@ -54,23 +59,17 @@
   });
 
   function loginComGoogle() {
-  const baseUrl = window.location.origin.includes("localhost")
-    ? "http://localhost:8080"
-    : window.location.origin;
+    const baseUrl = window.location.origin.includes("localhost")
+      ? "http://localhost:8080"
+      : window.location.origin;
 
-  supabase.auth.signInWithOAuth({
-    provider: "google",
-    options: {
-      redirectTo: baseUrl + "/dashboard.html"
-    }
+    supabase.auth.signInWithOAuth({
+      provider: "google",
+      options: {
+        redirectTo: baseUrl + "/dashboard.html"
+      }
     });
   }
-
-  supabase.auth.getUser().then(({ data: { user } }) => {
-    if (user) {
-      window.location.href = "dashboard.html";
-    }
-  });
 </script>
 
 </body>

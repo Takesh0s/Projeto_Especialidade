@@ -12,14 +12,16 @@
   <h1>Painel de Controle</h1>
   <img src="img/logo-desbravadores.png" alt="Logo Desbravadores" class="logo-img" />
 
-  <button onclick="window.location.href='unidade.html'">Gestão de Unidades</button>
-  <button onclick="window.location.href='desbravador.html'">Gestão de Desbravadores</button>
-  <button onclick="window.location.href='mensalidade.html'">Mensalidades</button>
-  <button onclick="window.location.href='patrimonio.html'">Patrimônio</button>
-  <button onclick="window.location.href='atas_atos.html'">Atas e Atos</button>
-  <button onclick="window.location.href='caixa.html'">Caixa</button>
-  <button onclick="window.location.href='relatorios.html'">Relatórios</button>
-  <button onclick="logout()">Sair</button>
+  <div class="menu">
+    <button onclick="window.location.href='unidade.html'">Gestão de Unidades</button>
+    <button onclick="window.location.href='desbravador.html'">Gestão de Desbravadores</button>
+    <button onclick="window.location.href='mensalidade.html'">Mensalidades</button>
+    <button onclick="window.location.href='patrimonio.html'">Patrimônio</button>
+    <button onclick="window.location.href='atas_atos.html'">Atas e Atos</button>
+    <button onclick="window.location.href='caixa.html'">Caixa</button>
+    <button onclick="window.location.href='relatorios.html'">Relatórios</button>
+    <button class="logout-btn" onclick="logout()">Sair</button>
+  </div>
 </div>
 
 <script src="supabase.js"></script>

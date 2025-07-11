@@ -1,43 +1,33 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Painel - Clube de Desbravadores</title>
-    <link rel="stylesheet" href="style.css">
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Painel de Controle - Clube de Desbravadores</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
 <div class="dashboard-container">
-    <h1>Painel de Controle</h1>
-    <h2>Clube de Desbravadores</h2>
+  <h1>Painel de Controle</h1>
+  <img src="img/logo-desbravadores.png" alt="Logo Desbravadores" class="logo-img" />
 
-    <div class="menu">
-        <a href="unidade.html">Gestão de Unidades</a>
-        <a href="desbravador.html">Gestão de Desbravadores</a>
-        <a href="mensalidade.html">Mensalidades</a>
-        <a href="patrimonio.html">Patrimônio</a>
-        <a href="atas_atos.html">Atas e Atos</a>
-        <a href="caixa.html">Caixa</a>
-        <a href="relatorios.html">Relatórios</a>
-        <button id="logoutBtn">Sair</button>
-    </div>
+  <button onclick="window.location.href='unidade.html'">Gestão de Unidades</button>
+  <button onclick="window.location.href='desbravador.html'">Gestão de Desbravadores</button>
+  <button onclick="window.location.href='mensalidade.html'">Mensalidades</button>
+  <button onclick="window.location.href='patrimonio.html'">Patrimônio</button>
+  <button onclick="window.location.href='atas_atos.html'">Atas e Atos</button>
+  <button onclick="window.location.href='caixa.html'">Caixa</button>
+  <button onclick="window.location.href='relatorios.html'">Relatórios</button>
+  <button onclick="logout()">Sair</button>
 </div>
 
 <script src="supabase.js"></script>
 <script>
-    supabase.auth.getSession().then(({ data }) => {
-        if (!data.session) {
-            window.location.href = 'index.html';
-        }
-    });
-
-    const logoutBtn = document.getElementById('logoutBtn');
-    logoutBtn.addEventListener('click', async () => {
-        await supabase.auth.signOut();
-        window.location.href = 'index.html';
-    });
+  async function logout() {
+    await supabase.auth.signOut();
+    window.location.href = "index.html";
+  }
 </script>
 
 </body>

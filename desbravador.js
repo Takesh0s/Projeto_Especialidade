@@ -45,6 +45,9 @@ async function listarDesbravadores() {
         <td>${d.contato || '-'}</td>
         <td>${d.unidade?.nome || '-'}</td>
         <td>${d.classe?.nome || '-'}</td>
+        <td>
+        <button onclick="verPerfil('${d.id}')">👤 Ver Perfil</button>
+        </td>
       </tr>`;
   });
 }
@@ -93,3 +96,7 @@ carregarUnidades();
 carregarClasses();
 carregarEspecialidades();
 listarDesbravadores();
+
+function verPerfil(id) {
+  window.location.href = `perfil-desbravador.html?id=${id}`;
+}

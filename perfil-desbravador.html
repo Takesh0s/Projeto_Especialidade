@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>Perfil do Desbravador</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body>
+
+<div class="profile-container">
+  <div class="profile-card">
+    <img id="fotoPerfil" class="profile-photo" src="https://via.placeholder.com/150" alt="Foto do Desbravador">
+
+    <h2 id="nomeDesbravador">Nome</h2>
+    <p><strong>Data de Nascimento:</strong> <span id="dataNascimento">-</span></p>
+    <p><strong>Contato:</strong> <span id="contato">-</span></p>
+    <p><strong>Unidade:</strong> <span id="unidade">-</span></p>
+    <p><strong>Classe Atual:</strong> <span id="classe">-</span></p>
+
+    <button onclick="editarPerfil()">✏️ Editar Perfil</button>
+    <button onclick="gerenciarEspecialidades()">⭐ Gerenciar Especialidades</button>
+    <button onclick="gerenciarClasses()">🎓 Gerenciar Classes</button>
+    <button class="danger-btn" onclick="excluirDesbravador()">🗑️ Excluir</button>
+
+    <a href="desbravador.html" class="back-link">← Voltar</a>
+  </div>
+
+  <div class="profile-lists">
+    <h3>Classes Concluídas</h3>
+    <ul id="classesConcluidas"></ul>
+
+    <h3>Especialidades Concluídas</h3>
+    <ul id="especialidades"></ul>
+  </div>
+</div>
+
+<script src="supabase.js"></script>
+<script src="perfil-desbravador.js"></script>
+<script src="verificarSessao.js"></script>
+
+</body>
+</html>

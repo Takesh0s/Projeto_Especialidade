@@ -91,6 +91,45 @@ async function excluirDesbravador() {
   }
 }
 
+async function enviarFoto(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+
+  const fileExt = file.name.split('.').pop();
+  const fileName = `desbravador-${desbravadorId}.${fileExt}`;
+  const filePath = `${fileName}`;
+
+  const { error: uploadError } = await supabase
+    .storage
+    .from('fotos-desbravadores')
+    .upload(filePath, file, { upsert: true });
+
+  if (uploadError) {
+    Swal.fire("Erro ao enviar imagem", uploadError.message, "error");
+    return;
+  }
+
+  const { data: publicUrlData } = supabase
+    .storage
+    .from('fotos-desbravadores')
+    .getPublicUrl(filePath);
+
+  const foto_url = publicUrlData.publicUrl;
+
+  const { error: updateError } = await supabase
+    .from('desbravador')
+    .update({ foto_url })
+    .eq('id', desbravadorId);
+
+  if (updateError) {
+    Swal.fire("Erro ao atualizar foto", updateError.message, "error");
+    return;
+  }
+
+  fotoPerfilEl.src = foto_url;
+  Swal.fire("Sucesso", "Foto atualizada com sucesso!", "success");
+}
+
 function editarPerfil() {
   Swal.fire("Em breve", "Funcionalidade de edição será adicionada.", "info");
 }

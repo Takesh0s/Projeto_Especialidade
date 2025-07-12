@@ -46,7 +46,9 @@ async function listarDesbravadores() {
         <td>${d.unidade?.nome || '-'}</td>
         <td>${d.classe?.nome || '-'}</td>
         <td>
-        <button onclick="verPerfil('${d.id}')">👤 Ver Perfil</button>
+          <button class="btn-ver-perfil" onclick="verPerfil('${d.id}')">
+            👤 Ver Perfil
+          </button>
         </td>
       </tr>`;
   });

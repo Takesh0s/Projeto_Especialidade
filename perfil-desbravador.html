@@ -12,6 +12,8 @@
 <div class="profile-container">
   <div class="profile-card">
     <img id="fotoPerfil" class="profile-photo" src="https://via.placeholder.com/150" alt="Foto do Desbravador">
+    <input type="file" id="uploadFoto" accept="image/*" style="display: none;" onchange="enviarFoto(event)">
+<button onclick="document.getElementById('uploadFoto').click()">📸 Alterar Foto</button>
 
     <h2 id="nomeDesbravador">Nome</h2>
     <p><strong>Data de Nascimento:</strong> <span id="dataNascimento">-</span></p>

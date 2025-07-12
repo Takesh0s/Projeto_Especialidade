@@ -604,3 +604,136 @@ a:hover {
   padding: 5px 0;
   border-bottom: 1px solid #eee;
 }
+
+td button {
+  background: linear-gradient(135deg, #00acc1, #26c6da);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+td button:hover {
+  background: linear-gradient(135deg, #00838f, #00acc1);
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0, 172, 193, 0.2);
+}
+
+.list-section {
+  margin-top: 30px;
+}
+
+#tabelaDesbravadores {
+  margin-top: 15px;
+  border-collapse: collapse;
+  width: 100%;
+  font-size: 14px;
+}
+
+#tabelaDesbravadores thead {
+  background-color: #f1f1f1;
+}
+
+#tabelaDesbravadores th,
+#tabelaDesbravadores td {
+  padding: 12px;
+  text-align: left;
+}
+
+#tabelaDesbravadores tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.btn-ver-perfil {
+  background: linear-gradient(135deg, #00acc1, #26c6da);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.btn-ver-perfil:hover {
+  background: linear-gradient(135deg, #00838f, #00acc1);
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0, 172, 193, 0.2);
+}
+
+/* Separação visual entre formulário e lista */
+.list-section {
+  margin-top: 40px;
+}
+
+/* Tabela com bordas suaves */
+#tabelaDesbravadores {
+  width: 100%;
+  margin-top: 20px;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+#tabelaDesbravadores thead {
+  background-color: #f5f5f5;
+}
+
+#tabelaDesbravadores th,
+#tabelaDesbravadores td {
+  padding: 12px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+#tabelaDesbravadores tr:nth-child(even) {
+  background-color: #fafafa;
+}
+
+.list-container {
+  width: 100%;
+  max-width: 1000px;
+  background: white;
+  margin: 30px auto;
+  padding: 30px;
+  border-radius: 16px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+  text-align: center;
+}
+
+.list-container h2 {
+  margin-bottom: 20px;
+  font-size: 20px;
+  color: #333;
+}
+
+.list-container table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+  margin-top: 10px;
+}
+
+.list-container th,
+.list-container td {
+  padding: 10px;
+  text-align: left;
+}
+
+.list-container tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.list-container a {
+  display: block;
+  margin-top: 20px;
+  color: #26c6da;
+  font-weight: bold;
+  text-decoration: none;
+}

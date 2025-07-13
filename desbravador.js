@@ -40,12 +40,12 @@ async function listarDesbravadores() {
   data.forEach(d => {
     tabelaCorpo.innerHTML += `
       <tr>
-        <td>${d.nome}</td>
-        <td>${d.data_nascimento || '-'}</td>
-        <td>${d.contato || '-'}</td>
-        <td>${d.unidade?.nome || '-'}</td>
-        <td>${d.classe?.nome || '-'}</td>
-        <td>
+        <td data-label="Nome">${d.nome}</td>
+        <td data-label="Data Nascimento">${d.data_nascimento || '-'}</td>
+        <td data-label="Contato">${d.contato || '-'}</td>
+        <td data-label="Unidade">${d.unidade?.nome || '-'}</td>
+        <td data-label="Classe">${d.classe?.nome || '-'}</td>
+        <td data-label="Ações">
           <button class="btn-ver-perfil" onclick="verPerfil('${d.id}')">
             👤 Ver Perfil
           </button>

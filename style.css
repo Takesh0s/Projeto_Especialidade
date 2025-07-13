@@ -669,12 +669,10 @@ td button:hover {
   box-shadow: 0 5px 15px rgba(0, 172, 193, 0.2);
 }
 
-/* Separação visual entre formulário e lista */
 .list-section {
   margin-top: 40px;
 }
 
-/* Tabela com bordas suaves */
 #tabelaDesbravadores {
   width: 100%;
   margin-top: 20px;
@@ -736,4 +734,335 @@ td button:hover {
   color: #26c6da;
   font-weight: bold;
   text-decoration: none;
+}
+
+.page-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 40px;
+  justify-content: center;
+  align-items: flex-start;
+  margin-top: 40px;
+  width: 100%;
+}
+
+.form-card,
+.list-card {
+  background: #ffffff;
+  padding: 30px 25px;
+  border-radius: 15px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+  flex: 1;
+  max-width: 400px;
+  transition: all 0.3s ease;
+}
+
+.form-card:hover,
+.list-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12);
+}
+
+.form-card h1,
+.list-card h2 {
+  margin-bottom: 20px;
+  font-size: 22px;
+  color: #333;
+}
+
+button {
+  padding: 12px;
+  font-size: 15px;
+  font-weight: 600;
+  background: linear-gradient(135deg, #26c6da, #00acc1);
+  border: none;
+  color: white;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease, transform 0.2s ease;
+}
+
+button:hover {
+  background: linear-gradient(135deg, #00acc1, #00838f);
+  transform: translateY(-1px);
+  box-shadow: 0 5px 15px rgba(0, 172, 193, 0.3);
+}
+
+.btn-ver-perfil {
+  background: linear-gradient(135deg, #00c853, #00e676);
+  font-weight: 500;
+  padding: 8px 12px;
+  font-size: 14px;
+}
+
+.btn-ver-perfil:hover {
+  background: linear-gradient(135deg, #00bfa5, #00c853);
+}
+
+input,
+select {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 15px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  transition: border-color 0.3s ease;
+  font-size: 14px;
+}
+
+input:focus,
+select:focus {
+  border-color: #26c6da;
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(38, 198, 218, 0.2);
+}
+
+h3 {
+  margin: 20px 0 10px;
+  font-size: 16px;
+  color: #333;
+  text-align: center;
+}
+
+#especialidadesLista label {
+  display: block;
+  padding: 5px 0;
+  font-size: 14px;
+  color: #444;
+}
+
+#especialidadesLista input[type="checkbox"] {
+  margin-right: 10px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+thead {
+  background-color: #f1f1f1;
+}
+
+th,
+td {
+  padding: 10px;
+  text-align: left;
+}
+
+tr:nth-child(even) {
+  background-color: #fafafa;
+}
+
+a {
+  display: inline-block;
+  margin-top: 20px;
+  font-weight: 600;
+  color: #26c6da;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+a:hover {
+  color: #00acc1;
+  text-decoration: underline;
+}
+
+@media (max-width: 900px) {
+  .page-container {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+.page-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 40px;
+  justify-content: center;
+  align-items: flex-start;
+  margin: 40px 20px;
+  width: 100%;
+}
+
+.form-card,
+.list-card {
+  background: #ffffff;
+  padding: 30px 25px;
+  border-radius: 15px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+  flex: 1 1 300px;
+  max-width: 400px;
+  transition: all 0.3s ease;
+}
+
+.form-card:hover,
+.list-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12);
+}
+
+.form-card h1,
+.list-card h2 {
+  margin-bottom: 20px;
+  font-size: 22px;
+  color: #333;
+}
+
+button {
+  padding: 12px;
+  font-size: 15px;
+  font-weight: 600;
+  background: linear-gradient(135deg, #26c6da, #00acc1);
+  border: none;
+  color: white;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease, transform 0.2s ease;
+}
+
+button:hover {
+  background: linear-gradient(135deg, #00acc1, #00838f);
+  transform: translateY(-1px);
+  box-shadow: 0 5px 15px rgba(0, 172, 193, 0.3);
+}
+
+.btn-ver-perfil {
+  background: linear-gradient(135deg, #00c853, #00e676);
+  font-weight: 500;
+  padding: 8px 12px;
+  font-size: 14px;
+  width: 100%;
+}
+
+.btn-ver-perfil:hover {
+  background: linear-gradient(135deg, #00bfa5, #00c853);
+}
+
+input,
+select {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 15px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  transition: border-color 0.3s ease;
+  font-size: 14px;
+}
+
+input:focus,
+select:focus {
+  border-color: #26c6da;
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(38, 198, 218, 0.2);
+}
+
+h3 {
+  margin: 20px 0 10px;
+  font-size: 16px;
+  color: #333;
+  text-align: center;
+}
+
+#especialidadesLista label {
+  display: block;
+  padding: 5px 0;
+  font-size: 14px;
+  color: #444;
+}
+
+#especialidadesLista input[type="checkbox"] {
+  margin-right: 10px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+thead {
+  background-color: #f1f1f1;
+}
+
+th,
+td {
+  padding: 10px;
+  text-align: left;
+}
+
+tr:nth-child(even) {
+  background-color: #fafafa;
+}
+
+a {
+  display: inline-block;
+  margin-top: 20px;
+  font-weight: 600;
+  color: #26c6da;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+a:hover {
+  color: #00acc1;
+  text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+  .page-container {
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+  }
+
+  .form-card,
+  .list-card {
+    max-width: 90%;
+    width: 100%;
+  }
+
+  table,
+  thead,
+  tbody,
+  th,
+  td,
+  tr {
+    display: block;
+    width: 100%;
+  }
+
+  thead tr {
+    display: none;
+  }
+
+  tr {
+    margin-bottom: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    background: #fff;
+    padding: 10px;
+  }
+
+  td {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 10px;
+    border-bottom: 1px solid #eee;
+  }
+
+  td:last-child {
+    border-bottom: none;
+  }
+
+  td:before {
+    content: attr(data-label);
+    font-weight: bold;
+    color: #555;
+  }
+
+  .btn-ver-perfil {
+    margin-top: 10px;
+  }
 }

@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Atas e Atos</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css" />
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
@@ -22,6 +22,8 @@
         <option value="ato">Ato</option>
     </select>
 
+    <input type="file" id="anexoAtas" accept="image/*,application/pdf">
+
     <button id="registrar">Registrar</button>
 
     <h2>Registros</h2>
@@ -32,6 +34,7 @@
                 <th>Título</th>
                 <th>Data</th>
                 <th>Conteúdo</th>
+                <th>Anexo</th>
             </tr>
         </thead>
         <tbody></tbody>
@@ -42,70 +45,8 @@
 </div>
 
 <script src="supabase.js"></script>
-<script>
-    supabase.auth.getSession().then(({ data }) => {
-        if (!data.session) {
-            window.location.href = 'index.html';
-        }
-    });
-
-    const tabelaCorpo = document.querySelector('#tabelaRegistros tbody');
-
-    async function carregarRegistros() {
-        const atas = await supabase.from('atas').select('*');
-        const atos = await supabase.from('atos').select('*');
-
-        tabelaCorpo.innerHTML = '';
-
-        atas.data?.forEach(a => {
-            tabelaCorpo.innerHTML += `<tr>
-                <td>Ata</td>
-                <td>${a.titulo}</td>
-                <td>${a.data}</td>
-                <td>${a.conteudo}</td>
-            </tr>`;
-        });
-
-        atos.data?.forEach(a => {
-            tabelaCorpo.innerHTML += `<tr>
-                <td>Ato</td>
-                <td>${a.titulo}</td>
-                <td>${a.data}</td>
-                <td>${a.conteudo}</td>
-            </tr>`;
-        });
-    }
-
-    document.getElementById('registrar').addEventListener('click', async () => {
-        const titulo = document.getElementById('titulo').value;
-        const conteudo = document.getElementById('conteudo').value;
-        const tipo = document.getElementById('tipoRegistro').value;
-
-        if (!titulo || !conteudo || !tipo) {
-            Swal.fire('Atenção', 'Preencha todos os campos.', 'warning');
-            return;
-        }
-
-        const tabela = tipo === 'ata' ? 'atas' : 'atos';
-        const { error } = await supabase.from(tabela).insert([
-            { titulo, conteudo }
-        ]);
-
-        if (error) {
-            Swal.fire('Erro', error.message, 'error');
-        } else {
-            Swal.fire('Sucesso', 'Registro salvo.', 'success');
-            document.getElementById('titulo').value = '';
-            document.getElementById('conteudo').value = '';
-            document.getElementById('tipoRegistro').value = '';
-            carregarRegistros();
-        }
-    });
-
-    carregarRegistros();
-</script>
-
 <script src="verificarSessao.js"></script>
+<script src="atas_atos.js"></script>
 
 </body>
 </html>

@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Controle de Mensalidades</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css" />
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
@@ -20,11 +20,13 @@
   <input type="number" id="mes" placeholder="Mês (1 a 12)" min="1" max="12">
   <input type="number" id="ano" placeholder="Ano">
   <input type="number" id="valor" placeholder="Valor (R$)">
-
+  
   <select id="status">
     <option value="pago">Pago</option>
     <option value="aberto">Em Aberto</option>
   </select>
+
+  <input type="file" id="anexo" accept="image/*,application/pdf">
 
   <button id="cadastrarMensalidade">Registrar</button>
 
@@ -37,6 +39,7 @@
         <th>Ano</th>
         <th>Valor</th>
         <th>Status</th>
+        <th>Anexo</th>
       </tr>
     </thead>
     <tbody></tbody>
@@ -47,80 +50,8 @@
 </div>
 
 <script src="supabase.js"></script>
-<script>
-  supabase.auth.getSession().then(({ data }) => {
-    if (!data.session) {
-      window.location.href = 'index.html';
-    }
-  });
-
-  const desbravadorSelect = document.getElementById('desbravadorSelect');
-  const tabelaCorpo = document.querySelector('#tabelaMensalidades tbody');
-
-  async function carregarDesbravadores() {
-    const { data, error } = await supabase.from('desbravador').select('*');
-    if (error) {
-      console.error(error);
-      return;
-    }
-    desbravadorSelect.innerHTML = '<option value="">Selecione</option>';
-    data.forEach(d => {
-      desbravadorSelect.innerHTML += `<option value="${d.id}">${d.nome}</option>`;
-    });
-  }
-
-  async function carregarMensalidades() {
-    const { data, error } = await supabase.from('mensalidade')
-      .select(`id, mes, ano, valor, status, desbravador:desbravador_id (nome)`);
-
-    tabelaCorpo.innerHTML = '';
-    if (data) {
-      data.forEach(m => {
-        const linha = `<tr>
-          <td>${m.desbravador?.nome || '-'}</td>
-          <td>${m.mes}</td>
-          <td>${m.ano}</td>
-          <td>R$ ${parseFloat(m.valor).toFixed(2)}</td>
-          <td>${m.status === 'pago' ? 'Pago' : 'Em Aberto'}</td>
-        </tr>`;
-        tabelaCorpo.innerHTML += linha;
-      });
-    }
-  }
-
-  document.getElementById('cadastrarMensalidade').addEventListener('click', async () => {
-    const desbravador_id = desbravadorSelect.value;
-    const mes = parseInt(document.getElementById('mes').value);
-    const ano = parseInt(document.getElementById('ano').value);
-    const valor = parseFloat(document.getElementById('valor').value);
-    const status = document.getElementById('status').value;
-
-    if (!desbravador_id || !mes || !ano || isNaN(valor) || !status) {
-      Swal.fire('Atenção', 'Preencha todos os campos corretamente.', 'warning');
-      return;
-    }
-
-    const { error } = await supabase.from('mensalidade').insert([
-      { desbravador_id, mes, ano, valor, status }
-    ]);
-
-    if (error) {
-      Swal.fire('Erro', error.message, 'error');
-    } else {
-      Swal.fire('Sucesso', 'Mensalidade registrada.', 'success');
-      document.getElementById('mes').value = '';
-      document.getElementById('ano').value = '';
-      document.getElementById('valor').value = '';
-      document.getElementById('status').value = 'pago';
-      carregarMensalidades();
-    }
-  });
-
-  carregarDesbravadores();
-  carregarMensalidades();
-</script>
-
 <script src="verificarSessao.js"></script>
+<script src="mensalidade.js"></script>
 
 </body>
 </html>

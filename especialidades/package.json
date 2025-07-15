@@ -1,0 +1,16 @@
+{
+  "name": "especialidades",
+  "version": "1.0.0",
+  "main": "atualizar_foto_url.js",
+  "scripts": {
+    "inserir": "node inserir_especialidades.js",
+    "atualizar-fotos": "node atualizar_foto_url.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "@supabase/supabase-js": "^2.51.0"
+  }
+}

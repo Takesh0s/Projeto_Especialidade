@@ -1,0 +1,1009 @@
+{
+  "especialidades": [
+    {
+      "area": "ADRA",
+      "lista": [
+        {
+          "nome": "Alívio da Fome",
+          "codigo": "AD-001",
+          "nivel": 1,
+          "ano": 2005,
+          "requisitos": [
+            "Assistir a uma reportagem referente ao tema da fome no mundo e discutir com a unidade os passos para reduzir.",
+            "Entrevistar uma pessoa que conduz distribuição de alimentos e compartilhar os resultados.",
+            "Descrever as causas da fome em seu país (redação ou apresentação).",
+            "Fazer uma coleta de itens alimentícios e entregar.",
+            "Visitar um banco de alimentos ou centro de distribuição e participar como voluntário."
+          ]
+        },
+        {
+          "nome": "Avaliação da Comunidade",
+          "codigo": "AD-002",
+          "nivel": 1,
+          "ano": 2005,
+          "requisitos": [
+            {
+              "texto": "Selecionar uma comunidade ou área urbana com a qual esteja familiarizado e descrever, da melhor forma possível, as seguintes informações:",
+              "subitens": [
+                "Localização em um mapa",
+                "Demografia (nº de habitantes, de preferência distribuídos por sexo e idade)",
+                "Condições socioeconômicas",
+                "Ocupações laborais mais comuns",
+                "Acesso à rede educacional e de saúde",
+                "Nível de educação",
+                "Nível de segurança",
+                "Outros dados que achar relevantes"
+              ]
+            },
+            "Listar as necessidades que você vê em sua comunidade. Isso pode incluir melhor apoio a famílias de baixa renda, assistência a idosos que vivem sozinhos, melhora na limpeza das áreas públicas, etc.",
+            "Entrevistar um líder comunitário, professor, pastor de igreja ou oficial de polícia para saber como pessoas como você poderiam exercer impacto positivo em tal comunidade ou área. Fazer anotações.",
+            "Preparar um relatório para o seu Clube de Desbravadores apresentando suas descobertas e descrever o que você aprendeu especificamente a respeito da comunidade ou área que escolheu. Seja criativo.",
+            "Descrever as melhorias mais importantes necessárias à sua comunidade e o que você pode fazer para ajudar."
+          ]
+        },
+        {
+          "nome": "Avaliação da Comunidade",
+          "codigo": "AD-003",
+          "nivel": 1,
+          "ano": 2005,
+          "requisitos": [
+            {
+              "texto": "Ler os seguintes textos bíblicos e explicar o que eles ensinam a respeito do papel que Deus espera que cada cristão desempenhe para satisfazer as necessidades dos pobres e sofredores na comunidade.",
+              "subitens": [
+                "Isaías 58:3-12",
+                "Lucas 10: 25-37",
+                "Mateus 25:31-46"
+              ]
+            },
+            {
+              "texto": "Explique o seguinte ao seu instrutor:",
+              "subitens": [
+                "Qual é o significado do acrônimo ADRA? Apresentar uma breve explanação do que cada letra representa e explicar a diferença entre \"assistência\" e \"desenvolvimento\".",
+                "Qual o nome do serviço social prestado pela Igreja Adventista local que ajuda os pobres e sofredores em seu entorno? Que tipos de serviços ele provê?"
+              ]
+            },
+            "Reunir-se com o líder da Ação Solidária Adventista em sua área e perguntar a respeito dos projetos que sua unidade ou Clube de Desbravadores pode ajudar para satisfazer às necessidades da comunidade local.",
+            "Planejar um projeto de serviço comunitário com a unidade ou Clube de Desbravadores e concluí-lo. Este projeto deve focar certas necessidades que sua comunidade apresenta. O tempo total, desde o planejamento até sua realização, deve ser de aproximadamente 10 horas."
+          ]
+        },
+        {
+          "nome": "Resposta a Emergências e Desastres",
+          "codigo": "AD-004",
+          "nivel": 1,
+          "ano": 2005,
+          "requisitos": [
+            {
+              "texto": "Explicar os tipos de danos mais prováveis de ocorrer às casas, indivíduos e comunidades diante dos principais tipos de emergências e desastres e indicar em qual parte do mundo eles ocorrem com mais frequência:",
+              "subitens": [
+                "Ciclones (furacões e tufões)",
+                "Tornados",
+                "Inundações",
+                "Terremotos",
+                "Tsunamis",
+                "Incêndios",
+                "Guerras/conflitos ou guerras civis"
+              ]
+            },
+            "Descrever brevemente os tipos de serviços prestados pela ADRA ou por outros órgãos de resposta a emergências e desastres locais aos sobreviventes de tais eventos em seu país.",
+            "Ler um jornal ou notícias da ADRA referente a emergências e desastres recentes e discutir quais são algumas coisas importantes a se ter em mente ao responder a uma situação dessas.",
+            "Explicar o que significa cada letra do acrônimo da ADRA e descreva o papel dela na resposta a emergências e desastres.",
+            {
+              "texto": "Descrever, pelo menos, uma destas organizações de resposta a emergências e desastres e como ela pode trabalhar com a ADRA durante tais situações.",
+              "subitens": [
+                "Cruz Vermelha/Comitê Internacional da Cruz Vermelha (CICV)",
+                "Ação Solidária Adventista (ASA)",
+                "Alto Comissário das Nações Unidas para Refugiados – ACNUR",
+                "Programa Alimentar Mundial (PAM)"
+              ]
+            },
+            "Explicar o papel do governo diante da ocorrência de uma emergência ou desastre e identificar a agência governamental chave em seu país que administra a resposta em tais situações.",
+            "Descobrir na Bíblia um texto que possa ser usado para confortar e animar um indivíduo da sua idade e do mesmo sexo, que experimentou perda total de sua casa, e dizer-lhe porque você escolheu esse texto”."
+          ]
+        },
+        {
+          "nome": "Resposta a Emergências e Desastres - avançado",
+          "codigo": "AD-005",
+          "nivel": 1,
+          "ano": 2005,
+          "requisitos": [
+            "Ter a especialidade de Resposta a emergências e desastres.",
+            {
+              "texto": "Descrever as causas subjacentes de cada um desses cenários de desastres e dar um exemplo recente de, pelo menos, 6 desastres e seu impacto na comunidade ou país. Destacar, pelo menos, um no qual a ADRA respondeu.",
+              "subitens": [
+                "Ciclones (furacões e tufões)",
+                "Tornados",
+                "Enchentes/Inundações",
+                "Secas",
+                "Tsunamis",
+                "Incêndios",
+                "Guerras/conflitos ou guerras civis",
+                "Erupções vulcânicas."
+              ]
+            },
+            "As 4 fases na gestão de emergências e desastres são: Prevenção / Mitigação, Preparo, Resposta e Recuperação. Em suas palavras, descrever para o seu instrutor o que cada um desses termos significa e porque são importantes.",
+            "O preparo é chave durante uma emergência ou desastre. Se você fosse construir um kit para tais circunstâncias, descrever para o seu instrutor quais itens seriam incluídos. Discutir as vantagens de escolher itens movidos à bateria e não à eletricidade, e alimentos não perecíveis em vez de perecíveis.",
+            "Desenhar a planta do local onde você vive. Pensar no que faria em 3 dos desastres relacionadas na questão 1. Traçar uma rota de fuga de sua casa e discuti-la com seu instrutor e família.",
+            "Encontrar 3 histórias na Bíblia que envolveram desastres naturais ou emergências políticas. Coloque-se no lugar das pessoas da história e descrever como esses eventos o afetariam. Ainda, brevemente, discutir como as pessoas nas histórias sobreviveram a essas situações.",
+            "Apresentar um breve relatório para o seu Clube de Desbravadores a respeito do que você aprendeu sobre emergências e desastres e de estar preparado para agir nessas circunstâncias. Você pode fazer uma apresentação, encenação, mostrar um breve vídeo ou outro método que melhor transmita o que você aprendeu."
+          ]
+        },
+        {
+          "nome": "Alfabetização",
+          "codigo": "AD-006",
+          "nivel": 2,
+          "ano": 2009,
+          "requisitos": [
+            "Definir o termo alfabetização.",
+            "Pesquisar e descrever com brevidade como 2 ou 3 organizações em sua comunidade ou país promovem a alfabetização ou proveem serviços de alfabetização a crianças e adultos.",
+            "Escrever um parágrafo explicando porque a alfabetização é importante.",
+            {
+              "texto": "Realizar 3 das seguintes atividades:",
+              "subitens": [
+                "Ajudar alguém a ler um pequeno livro ou uma breve história.",
+                "Ler uma pequena história para um grupo de crianças e discutir com elas posteriormente.",
+                "Fazer 10 cartelas de material pedagógico com palavras simples e ilustrações ou fotos e passá-las a alguém que esteja aprendendo a ler.",
+                "Ler vários capítulos da Bíblia para uma pessoa idosa que você saiba que é cega ou incapaz de ler. Isso pode ser feito em uma ou várias visitas.",
+                "Fazer uma apresentação de 5 minutos em sua escola, Escola Sabatina ou igreja, sobre o que você aprendeu sobre alfabetização."
+              ]
+            },
+            "Escolher 3 palavras e explicar ao seu instrutor como você ensinaria alguém sobre o significado das palavras e como soletrá-las."
+          ]
+        },
+        {
+          "nome": "Resolução de Conflitos",
+          "codigo": "AD-007",
+          "nivel": 3,
+          "ano": 2009,
+          "observacao": "É requerida a presença de um adulto mediador para a discussão de grupo.",
+          "requisitos": [
+            {
+              "texto": "Explicar como Cristo encorajou pessoas em conflito nas seguintes histórias bíblicas. Identificar a natureza do conflito ou as necessidades humanas em cada história.",
+              "subitens": [
+                "João 8:1-11 (Jesus e a Mulher Adúltera)",
+                "Mateus 18:1-6 (Discípulos - O maior no reino dos Céus)",
+                "1 Reis 3:16-28 (Salomão e a causa de 2 mulheres)"
+              ]
+            },
+            "Discutir os conflitos de relacionamento, de identidade, raciais e culturais enfrentados pelos adolescentes e jovens em sua comunidade.",
+            "Descrever as categorias de necessidades humanas e apresentar um exemplo da realidade para cada uma delas.",
+            "O que significa ouvir ativamente? Pratique o ouvir ativo encenando os conflitos relacionados no item número 2.",
+            {
+              "texto": "Aplicar o seguinte método de resolução de conflito em um exemplo do item número 2.",
+              "subitens": [
+                "Montar o cenário",
+                "Reunir informações",
+                "Identificar o problema",
+                "Pensar nas soluções",
+                "Negociar uma solução"
+              ]
+            },
+            "Explicar como fazer encaminhamento a um conselheiro profissional ou pastor.",
+            "Discutir seus motivos para querer ajudar seus amigos quando enfrentam problemas. O que dizer de uma pessoa que não lhe é tão familiar?"
+          ]
+        },
+        {
+          "nome": "Reassentamento de Refugiados",
+          "codigo": "AD-008",
+          "nivel": 2,
+          "ano": 2009,
+          "requisitos": [
+            "Descrever algumas causas gerais porque as pessoas se deslocam para outros países como refugiados. Definir também os termos refugiado, deslocado interno e imigrante e explicar como essas palavras são semelhantes ou diferentes.",
+            "Listar as necessidades imediatas que um refugiado pode ter quando chega a um novo país. Descrever como você se sentiria se subitamente tivesse que enfrentar uma nova língua, cultura e ambiente.",
+            "Descobrir que organizações em sua comunidade, país ou no mundo ajudam os refugiados e deslocados internos. Pesquisar sobre o trabalho que eles realizam.",
+            "Descrever em poucas palavras como você poderia ajudar um refugiado ou um deslocado interno em sua comunidade.",
+            "Perguntar a uma pessoa de outro país, que vive em sua comunidade, como ela se ajustou ao novo ambiente. Peça-lhe que descreva os desafios e contrastes que experimentou durante o processo de adaptação à comunidade.",
+            "Fazer um breve relatório para o seu Clube de Desbravadores, igreja, escola ou para um grupo cívico, sobre o que você aprendeu sobre refugiados e deslocados internos e que desafios eles enfrentam. Você pode levar a efeito este requisito através de uma apresentação audiovisual, encenação, vídeo ou qualquer outra forma que melhor transmita suas descobertas. Discutir porque é importante estar atento à situação dos refugiados e tentar encontrar soluções para esse problema."
+          ]
+        },
+        {
+          "nome": "Desenvolvimento Comunitário",
+          "codigo": "AD-009",
+          "nivel": 1,
+          "ano": 2009,
+          "requisitos": [
+            "Definir desenvolvimento comunitário.",
+            "Explicar ao seu instrutor porque alguns países são considerados desenvolvidos enquanto outros são chamados de países em desenvolvimento.",
+            "Mencionar 5 países em desenvolvimento e listar 3 ações que a ADRA realiza neles e que poderiam ser consideradas ações de desenvolvimento e 2 que se caracterizam como ações assistenciais.",
+            "Ler a respeito de porque existem pobres entre nós no livro O Desejado de Todas as Nações, de Ellen G. White, capítulo 70 – “Um Destes Meus Pequeninos Irmãos”. Descrever ao seu instrutor o que você aprendeu.",
+            "Descrever, pelo menos, uma necessidade em seu bairro ou município que requeira atenção.",
+            "Escrever um breve plano de desenvolvimento comunitário que pode ser implementado por seu Clube de Desbravadores (plantio de árvores, limpeza de parques e ruas, pintura de muros, etc.). O plano deve descrever a atividade, o tamanho do grupo, a logística de transporte e materiais e o tempo para completar tal atividade.",
+            {
+              "texto": "Participar por, pelo menos, 4 horas em uma das seguintes atividades:",
+              "subitens": [
+                "O desbravador deverá contatar a Ação Solidária Adventista (ASA) de sua igreja e ver em que poderá ajudar. Talvez seja organizando itens doados ou participando de algum projeto por ela já estabelecido. Poderá envolver-se com a coleta e distribuição de alimentos, cobertores, agasalhos, sapatos e outros bens para moradores de rua ou para famílias cadastradas pela ASA. Ainda, poderá apoiar na reparação ou construção de casas para pessoas carentes.",
+                "O desbravador deverá contatar a ADRA para ver a possibilidade de envolver-se como voluntário em algum projeto que esteja sendo implementado no seu bairro ou município.",
+                "O desbravador deverá envolver-se com um \"Mutirão Social\". O alvo deste tipo de mutirão é proporcionar à população menos favorecida acesso a certos serviços de forma gratuita. Alguns destes serviços são:corte de cabelo, testes rápidos para identificar doenças como sífilis, hepatite e AIDS, aferição de pressão arterial, orientações de saúde e nutrição, palestras educativas sobre como economizar energia e gás, recreação infantil, emissão de documento como carteira de trabalho, encaminhamento para vagas de empregos, entre outros. O mutirão pode ser feito no pátio da igreja, num centro comunitário, num ginásio de esportes ou outro local sugerido e autorizado pelas autoridades locais.",
+                "O desbravador deverá procurar saber o que sua igreja, outras igrejas, o governo ou organizações comunitárias estão fazendo pelos moradores de rua. Caso a comunidade já tenha esse programa, você poderá unir-se a ele."
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "area": "Artes e Habilidades Manuais",
+      "lista": [
+        {
+          "nome": "Automodelismo",
+          "codigo": "HM-001",
+          "nivel": 2,
+          "ano": 1928,
+          "requisitos": [
+            "Construir pelo menos um modelo de plástico, a partir de um kit. O carro deve seguir, tanto quanto possível, o padrão original.",
+            {
+              "texto": "Escolha um:",
+              "subitens": [
+                "Construir um segundo modelo usando acessórios opcionais incluídos no kit, ou criar alterações usando massa de vidraceiro e/ou partes de outros kits. (Decalques não contam.) Pintar o modelo.",
+                "Construir um modelo de corrida de acordo com as normas do Campeonato de Automodelismo e participar de uma corrida."
+              ]
+            },
+            "Escrever ou apresentar oralmente a história do automóvel. Não deixar de incluir passos interessantes no processo de desenvolvimento, como, por exemplo, tamanho dos motores, transmissão automática, volantes, controles computadorizados, etc."
+          ]
+        },
+        {
+          "nome": "Trabalhos com Agulha",
+          "codigo": "HM-002",
+          "nivel": 2,
+          "ano": 1928,
+          "requisitos": [
+            {
+              "texto": "Apresentar artigos que tenham sido feitos por você usando os pontos a seguir:",
+              "subitens": [
+                "Ponto contorno",
+                "Ponto margarida",
+                "Ponto corrente (correntinha ou ponto cadeia)",
+                "Ponto-cruz",
+                "Bordado richelieu",
+                "Ponto cheio",
+                "Chuleio (chuleado)",
+                "Nó francês",
+                "Ponto caseado",
+                "Ponto pena",
+                "Ponto atrás",
+                "Ponto espinha de peixe ou ponto folha",
+                "Ponto matiz",
+                "Ponto vagonite"
+              ]
+            },
+            {
+              "texto": "Fazer duas das seguintes atividades:",
+              "subitens": [
+                "Bordar um dos itens a seguir: par de fronhas, pano de prato, ou outro artigo equivalente.",
+                "Fazer uma capa de almofada",
+                "Bordar um jogo de cozinha",
+                "Fazer uma toalha ou caminho de mesa",
+                {
+                  "texto": "Fazer um artigo usando qualquer um dos métodos a seguir:",
+                  "subitens": [
+                    "Patchwork",
+                    "Franzido casa de abelha",
+                    "Richelieu",
+                    "Ponto russo"
+                  ]
+                }
+              ]
+            },
+            "Quais são os tipos de renda mais comuns em sua região e quais os cuidados de conservação de cada uma delas?",
+            "Descrever um método satisfatório de manter seus utensílios para bordar em boas condições.",
+            "Explicar quais são os cuidados necessários com as peças bordadas em relação à limpeza e conservação.",
+            {
+              "texto": "Quais são os tipos de tecido mais adequados para se fazer os seguintes trabalhos:",
+              "subitens": [
+                "Bordado richelieu",
+                "Franzido casa de abelha",
+                "Patchwork",
+                "Ponto russo",
+                "Ponto cruz",
+                "Ponto vagonite",
+                "Ponto matiz"
+              ]
+            },
+            "Demonstrar como engomar e passar corretamente um artigo bordado."
+          ]
+        },
+        {
+          "nome": "Desenho e Pintura",
+          "codigo": "HM-003",
+          "nivel": 2,
+          "ano": 1929,
+          "requisitos": [
+            "Fazer e apresentar um desenho à mão de um animal, demonstrando a distribuição equilibrada das cores.",
+            "Desenhar um objeto cilíndrico e outro retangular juntos, demonstrando perspectiva e equilíbrio de luz e sombras.",
+            "Preparar e apresentar um desenho de alguma paisagem da natureza que haja perto de sua casa.",
+            "Fazer, em cores, um desenho decorativo, usando qualquer técnica e motivo. Mencionar o uso que pretende dar para ele.",
+            "Pintar um “tapete” de flores, ou de folhas, caídas no chão demonstrando riqueza de cores e detalhes.",
+            "Pintar uma cena ao ar livre em aquarela ou óleo.",
+            "Organizar uma exposição dos trabalhos feitos no decorrer desta especialidade no Clube, Escola ou Igreja. Convidar os pais e apoiadores do Clube e presenteá-los com algum dos desenhos produzidos."
+          ]
+        },
+        {
+          "nome": "Música - básico",
+          "codigo": "HM-004",
+          "nivel": 2,
+          "ano": 1929,
+          "observacao": "Necessário acompanhamento de instrutor músico.",
+          "requisitos": [
+            "Qual a definição básica de música?",
+            "Explicar o que é harmonia, melodia e ritmo.",
+            "O que é Clave? Escrever uma escala completa (de Dó a Dó, por exemplo) nas claves de Sol, Fá e Dó.",
+            "Definir o que é timbre, altura, duração e intensidade de um som.",
+            {
+              "texto": "Saber o que significa a palavra \"Intervalo\" na música. Explicar o seguinte:",
+              "subitens": [
+                "Um intervalo de meio tom",
+                "Um intervalo de um tom",
+                "Um intervalo de uma terça",
+                "Um intervalo de uma quinta",
+                "Um intervalo de uma oitava"
+              ]
+            },
+            "Conhecer os tons e semitons naturais. Com auxílio de uma partitura, ser capaz de reconhecer as notas de um verso ou coro de um hino da sua Igreja.",
+            "Definir o que é uma orquestra e citar, pelo menos, 2 instrumentos de cada classe de instrumentos usados em uma orquestra (Cordas, madeiras, metais, percussão e teclas).",
+            "Tocar ou cantar, com ou sem auxílio de partitura, um hino de sua igreja ou música sacra e apresentar satisfatoriamente para um grupo de pessoas.",
+            "Fazer um resumo bibliográfico de um famoso compositor de hinos e apresente em forma de palestra para um grupo de pessoas."
+          ]
+        },
+        {
+          "nome": "Música - intermediário",
+          "codigo": "HM-005",
+          "nivel": 2,
+          "ano": 1929,
+          "observacao": "Necessário acompanhamento de instrutor músico.",
+          "requisitos": [
+            "Ter a especialidade de Música - básico.",
+            "Tocar ou cantar um escala e citar todas as notas de sua composição.",
+            "O que é Semibreve? Mínima? Colcheia? Desenhar cada um dos símbolos.",
+            "Saber a diferença entre música sacra e secular e citar um grande compositor musical de cada tipo de música.",
+            "Saber o que é o compasso de uma música. Ser capaz de diferenciar uma marcha de uma valsa e dar o compasso de cada uma delas.",
+            "Citar 5 grandes compositores de música erudita e, pelo menos, uma composição de cada um deles, incluindo um Oratório, uma peça para piano e uma canção.",
+            "Tocar, com ou sem ajuda de um livro de partitura, ou cantar de memória 15 hinos ou corinhos de sua igreja, pelo menos, um verso ou estrofe e listar o compositor de cada um deles.",
+            "Tocar ou cantar de memória uma peça musical de qualidade, diferente das que foram apresentadas no requisito 7 e apresentá-la para um grupo de pessoas.",
+            "Saber a função do maestro de uma orquestra e compreender o significado dos principais gestos que ele faz, ou com uma batuta, ou com as mãos.",
+            "Ser capaz de ensinar um grupo pequeno de pessoas a tocar ou cantar um hino ou coro da sua igreja, com ou sem auxílio de partitura, e apresentar satisfatoriamente para um grupo de pessoas."
+          ]
+        },
+        {
+          "nome": "Música - avançado",
+          "codigo": "HM-006",
+          "nivel": 2,
+          "ano": 1929,
+          "observacao": "Necessário acompanhamento de instrutor músico.",
+          "requisitos": [
+            "Ter a especialidade de Música - intermediário.",
+            "Estudar a biografia de um compositor do Hinário Adventista à sua escolha. Dizer como se deu o início de sua vida musical, quais oportunidades teve, onde estudou música, qual instrumento dominava, principais obras e como foi sua morte/o que faz atualmente.",
+            {
+              "texto": "Cumprir um dos itens abaixo:",
+              "subitens": [
+                "Para instrumentistas: com auxílio de uma partitura, tocar um trecho de música moderadamente difícil e saber todos os símbolos e termos contidos na partitura deste trecho.",
+                "Para cantores: Demonstrar, usando uma batuta ou as mãos, como liderar um coral para interpretar, pelo menos, uma composição em 3/4 e uma em 4/4."
+              ]
+            }
+          ]
+        },
+        {
+          "nome": "Letreiros e Cartazes",
+          "codigo": "HM-007",
+          "nivel": 2,
+          "ano": 1933,
+          "requisitos": [
+            {
+              "texto": "Escrever de memória o alfabeto completo, maiúsculas e minúsculas, de 2 dos seguintes tipos de fontes:",
+              "subitens": [
+                "Gótico",
+                "Times New Roman",
+                "Itálico",
+                "Arial",
+                "Calibri",
+                "Verdana"
+              ]
+            },
+            "Demonstrar os diferentes tipos de tamanhos de letras e canetas a serem utilizadas ao se fazer um cartaz.",
+            "Citar, pelo menos, 4 princípios básicos ao se fazer um cartaz atraente e diversificado.",
+            "Fazer, pelo menos, 3 cartazes demonstrando a variedade de tamanho das fontes a serem utilizadas. Escolher um departamento da igreja para realizar esta tarefa.",
+            "Fazer 5 cartazes com temas diferenciados da nossa atualidade, onde os mesmos serão avaliados de acordo com os seguintes critérios: capricho, criatividade e tipos de letra usados.",
+            "Praticar com precisão todas as letras do nosso alfabeto até demonstrar um domínio da mesma."
+          ]
+        },
+        {
+          "nome": "Cestaria",
+          "codigo": "HM-008",
+          "nivel": 2,
+          "ano": 1937,
+          "requisitos": [
+            "Apresentar para o examinador (Escrito ou oralmente) um trabalho sobre 2 países onde cresce o junco.",
+            "Explicar como tratar o junco antes do trançamento.",
+            "Conhecer outros tipos de fibras vegetais que podem ser usadas na cestaria e que são comuns em sua região.",
+            {
+              "texto": "Que ferramentas você usaria para:",
+              "subitens": [
+                "Fazer cestas de junco?",
+                "Fazer cestas de raffia?"
+              ]
+            },
+            {
+              "texto": "Definir:",
+              "subitens": [
+                "Trançamento chamuscado",
+                "Achatamento"
+              ]
+            },
+            {
+              "texto": "Explicar como:",
+              "subitens": [
+                "Consertar uma estaca quebrada da roda de trançar",
+                "Emendar o junco."
+              ]
+            },
+            "Citar 2 tipos de bases usadas em cestas e especificar em qual tipo de cesta cada base pode ser usada.",
+            {
+              "texto": "Descrever como fazer:",
+              "subitens": [
+                "Um trançamento duplo",
+                "Uma tripla guarnição de raios"
+              ]
+            },
+            "Fazer uma bandeja para lanches, com base de madeira.",
+            "Fazer algum objeto simples com base trançada.",
+            "Fazer um descanso de panelas redondo, de 15 centímetros de diâmetro, de Raffia ou similar."
+          ]
+        },
+        {
+          "nome": "Trabalhos em Metal",
+          "codigo": "HM-009",
+          "nivel": 2,
+          "ano": 1937,
+          "requisitos": [
+            "Conhecer, pelo menos, 3 tipos de metais que são utilizados em trabalhos com metal.",
+            {
+              "texto": "Realizar um trabalho em metal utilizando as ferramentas apropriadas para o trabalho e escolhendo um dos acabamentos finais:",
+              "subitens": [
+                "Envelhecimento",
+                "Repuxado ou cinzelado"
+              ]
+            },
+            "Completar um projeto usando um perfurador de metal.",
+            "Completar um projeto usando perfuração, rebitagem e dobra de metal.",
+            {
+              "texto": "Demonstrar capacidade de usar corretamente os seguintes equipamentos com segurança:",
+              "subitens": [
+                "Esquadro",
+                "Serra de joalheiro",
+                "Martelo de bola",
+                "Rebitadeira",
+                "Morsa ou mini torno",
+                "Suta",
+                "Riscador e punção de bico",
+                "Alicates de ponta redonda,chata e universal",
+                "Tesoura de cortar metal",
+                "Escopro",
+                "Serrinha",
+                "Cinzéis",
+                "Lima",
+                "Furadeira"
+              ]
+            },
+            "Quais são os EPIs (equipamentos de proteção individual) necessários para se trabalhar com metais?"
+          ]
+        },
+        {
+          "nome": "Arte de Oleiro",
+          "codigo": "HM-010",
+          "nivel": 2,
+          "ano": 1938,
+          "requisitos": [
+            "Escrever ou explicar oralmente os diferentes tipos e usos da arte em louça e dos materiais usados em sua confecção.",
+            "Qual é o propósito de um vitrificado? Descreva os perigos específicos a serem evitados.",
+            "Projetar e desenhar 2 louças de barro, uma das quais deve ser decorada.",
+            {
+              "texto": "Fazer 3 dos objetos a seguir. Cada projeto deve ser decorado com, por exemplo, pintura, vitrificado ou entalhe.",
+              "subitens": [
+                "Um jarro ou vaso.",
+                "Uma caixa.",
+                "Outro objeto semelhante.",
+                "Desenhar e fabricar quatro azulejos diferentes.",
+                "Uma bandeja ou prato.",
+                "Na roda do oleiro, fazer um vaso simples."
+              ]
+            }
+          ]
+        },
+        {
+          "nome": "Entalhe em Madeira",
+          "codigo": "HM-011",
+          "nivel": 2,
+          "ano": 1938,
+          "requisitos": [
+            "Explique as características das madeiras de coníferas e folhosas. Faça uma lista com, ao menos, 5 tipos de madeira ideais para trabalhos de entalhe.",
+            "Descrever os diferentes instrumentos usados no entalhe de madeira e explicar como afiá-los.",
+            "Explicar os melhores métodos de lidar com a fibra da madeira.",
+            "Desenhar e entalhar uma placa em baixo-relevo.",
+            {
+              "texto": "Desenhar e entalhar dois dos itens a seguir:",
+              "subitens": [
+                "Uma bandeja.",
+                "Suporte de livros",
+                "Um apito",
+                "Abridor de cartas",
+                "Outro item equivalente de sua escolha"
+              ]
+            }
+          ]
+        },
+        {
+          "nome": "Ornamentação com Flores",
+          "codigo": "HM-012",
+          "nivel": 2,
+          "ano": 1938,
+          "requisitos": [
+            "Citar o nome de seis espécimes de flores perenes e seis de floração anual que sejam apropriadas para a ornamentação interna.",
+            "Citar o nome de pelo menos três espécies que florescem na primavera ou no início do verão, que sejam apropriadas para ornamentação interna.",
+            "Citar pelo menos três flores que não se conservam bem após cortadas, e três que se conservam bem após o corte.",
+            "Apresentar seis sugestões para o corte de flores e cuidados após o corte, bem como quando cortar, como cortar e como mantê-las.",
+            "Em que estágio de seu desenvolvimento deve-se cortar as rosas, palmas e dálias?",
+            "Apresentar três sugestões sobre a relação dos recipientes com as flores usadas, e três sobre a relação do arranjo de flores com o cômodo e móveis do mesmo.",
+            "Na ornamentação com flores, qual deveria ser a relação entre as cores mais escuras e mais claras, flores maiores e menores, abertas ou parcialmente abertas?",
+            {
+              "texto": "Fazer dois arranjos de flores para cada uma das áreas a seguir:",
+              "subitens": [
+                "Decoração de mesa",
+                "Uso geral da casa",
+                "Local público"
+              ]
+            },
+            "Quais são algumas das flores silvestres que podem ser usadas na ornamentação de uma casa? Que combinação destas flores podem ser usadas?"
+          ]
+        },
+        {
+          "nome": "Pintura em Vidro",
+          "codigo": "HM-013",
+          "nivel": 1,
+          "ano": 1938,
+          "requisitos": [
+            "Listar e descrever, no mínimo, 3 técnicas distintas de pintura em vidro, diferentes das citadas nessa especialidade.",
+            "Listar, ao menos, 3 tipos de tintas especializadas para pintura em vidro.",
+            "Conhecer as cores primárias e as secundárias; saber como misturar as cores primárias para obter as cores secundárias. Que misturas de tintas devem ser evitadas e por quê?",
+            "Conhecer o material usado para pintar, montar e pendurar os vidros pintados.",
+            "Qual a importância de fazer uma boa limpeza e secagem do vidro antes de iniciar alguma técnica de pintura?",
+            "Explicar como é feita a técnica de transparência utilizada na pintura em vidro.",
+            "Fazer uma silhueta em vidro e prepará-la para ser pendurada.",
+            "Fazer uma pintura com as mãos, num espelho.",
+            {
+              "texto": "Fazer e expor uma pintura em vidro para cada um dos motivos de desenho a seguir:",
+              "subitens": [
+                "Animal",
+                "Flor",
+                "Paisagem"
+              ]
+            },
+            {
+              "texto": "Completar pinturas em vidro utilizando 2 dos seguintes:",
+              "subitens": [
+                "Serigrafia",
+                "Rolo e Pincel",
+                "Mosaico (com papel contato)"
+              ]
+            }
+          ]
+        },
+        {
+          "nome": "Tecelagem",
+          "codigo": "HM-014",
+          "nivel": 2,
+          "ano": 1938,
+          "requisitos": [
+            "Definir o que é tecelagem. Qual a origem dessa antiga forma de artesanato?",
+            "Descrever e exemplificar os processos de preparação básicos para a tecelagem.",
+            "Citar, pelo menos, 3 matérias-primas que são muito usadas para a tecelagem.",
+            {
+              "texto": "Definir os seguintes termos:",
+              "subitens": [
+                "Teia ou Urdume",
+                "Trama",
+                "Lançadeira de tear",
+                "Cilindro do tear",
+                "Tear de pente liço (Fios que guiam o Urdume)",
+                "Cilindro para Tecido"
+              ]
+            },
+            "Por quais outros nomes o Urdume pode ser chamado?",
+            "O que é urdidura direta? Que processos e equipamentos são necessários para a sua realização?",
+            "Desenhar, pelo menos, 3 estruturas diferentes de tecidos, demonstrando como acontece o entrelaçamento do urdume com a trama.",
+            "Fazer um tear à mão em um papelão e em seguida desenvolver uma bolsa simples.",
+            "Desenhar e tecer uma toalha de mesa, utilizando, pelo menos, 3 cores diferentes.",
+            {
+              "texto": "Cumprir um dos seguintes:",
+              "subitens": [
+                "Identificar cada uma das partes de um tear e explicar a função de cada uma delas.",
+                "Fazer um simples tear de madeira, no qual possa tecer uma camisa básica."
+              ]
+            },
+            "Fazer um pegador de panela com alça."
+          ]
+        },
+        {
+          "nome": "Trabalhos em Madeira",
+          "codigo": "HM-015",
+          "nivel": 2,
+          "ano": 1938,
+          "requisitos": [
+            "Identificar, pelo menos, 5 tipos comuns de madeira, tais como: pinho, peroba, mogno, maçaranduba e jacarandá.",
+            "Conhecer as características das madeiras identificadas e conhecer, ao menos, uma utilidade para cada exemplo dado.",
+            "Quais as diferenças entre coníferas e folhosas? Essa classificação indica que espécies são melhores para trabalhos em madeira? Justifique sua resposta.",
+            {
+              "texto": "Saber como usar adequadamente as seguintes ferramentas em trabalhos com madeira:",
+              "subitens": [
+                "Serra tico-tico",
+                "Lima ou grosa",
+                "Plaina",
+                "Faca",
+                "Talhadeira/formão",
+                "Lixas"
+              ]
+            },
+            "Conhecer, pelo menos, 2 procedimentos de segurança para cada uma das ferramentas acima.",
+            "Cortar, montar e dar acabamento em um suporte de livros ou peso para portas.",
+            "Entalhar e terminar uma estaca de jardim ou uma placa para o gramado, dando alguma forma, tal como de uma criança, pássaro, flor ou árvore.",
+            "Fazer uma placa, uma bandeja, ou algum outro objeto útil em que a madeira é usada."
+          ]
+        },
+        {
+          "nome": "Aeromodelismo",
+          "codigo": "HM-016",
+          "nivel": 2,
+          "ano": 1944,
+          "requisitos": [
+            "Montar, a partir de um kit, e fazer voar com sucesso um aeroplano de madeira leve, papel de seda e borracha ou outro material movido à gasolina.",
+            "Montar um planador a partir de um kit, observar suas características de vôo e sua relação com as posições variáveis das asas.",
+            "Montar e fazer voar, com sucesso, dois diferentes estilos de aeroplanos usando folhas de papel entre 20 e 35 centímetros de comprimento e largura.",
+            {
+              "texto": "Definir, localizar e explicar o uso dos seguintes itens básicos:",
+              "subitens": [
+                "Fuselagem",
+                "Asa",
+                "Leme",
+                "Estabilizador horizontal",
+                "Tirante",
+                "Cockpit",
+                "Motor",
+                "Trem de pouso",
+                "Hélice"
+              ]
+            }
+          ]
+        },
+        {
+          "nome": "Cultura Indígena",
+          "codigo": "HM-017",
+          "nivel": 2,
+          "ano": 1944,
+          "requisitos": [
+            "Porque os nativos das Américas foram chamados de índios pelos europeus?",
+            "Listar 5 utensílios domésticos produzidos pelos índios de sua região, utilizando materiais naturais. Fazer um destes itens e demonstrar o uso para a seu instrutor.",
+            "Listar 15 alimentos ou prato típico introduzidos na cultura gastronômica de seus países pelos índios.",
+            "Citar 5 hábitos culturais da atualidade em seu país herdados dos índios.",
+            "Listar 10 palavras de origem indígena incorporadas a língua oficial de seu país.",
+            "Relacionar 5 lugares(estados, cidades, etc.) em seu país que possui nome indígena e dê o significado de cada um deles.",
+            "Conhecer 5 rochas e/ou minerais e saber como eram usados pelos índios.",
+            "Explicar como, e com quais materiais, os índios produziam seus arcos e flechas.",
+            "Listar 5 pratos da culinária indígena feitos com mandioca. Apresentar as receitas e demonstrar habilidade no preparo de, ao menos, 2 desses pratos.",
+            "O que são pinturas rupestres indígenas? E qual o lugar mais próximo onde podem ser encontradas?",
+            "Listar, ao menos, 10 materiais utilizados como matéria-prima pelos índios nativos de seu país na confecção de peças de artesanato e indicar o tipo de peça produzido com cada material citado.",
+            "Fazer e apresentar a seu instrutor, ao menos, 3 itens de artesanato dentre os listados no requisito anterior."
+          ]
+        },
+        {
+          "nome": "Escultura",
+          "codigo": "HM-018",
+          "nivel": 2,
+          "ano": 1945,
+          "requisitos": [
+            "Relacionar as ferramentas e material usados em esculturas simples.",
+            "Modelar dois ou mais exemplos de animais de brinquedos, empregando uma das técnicas de escultura em materiais como: argila, massa plástica, etc.",
+            "Fazer um modelo da mão ou pé humano usando uma das técnicas de escultura.",
+            "A partir de um modelo vivo, fazer uma escultura em relevo da cabeça, empregando uma das técnicas de escultura (Não precisa ser em tamanho natural)."
+          ]
+        },
+        {
+          "nome": "Xilogravura",
+          "codigo": "HM-019",
+          "nivel": 2,
+          "ano": 1945,
+          "requisitos": [
+            "Definir o que é xilogravura e onde surgiu essa arte contemporânea.",
+            "Explicar os princípios básicos da preparação de um desenho e leitura aplicada em uma xilogravura.",
+            "Fazer uma lista de ferramentas e equipamentos necessários para uma xilogravura.",
+            "Explique a diferencia entre desenho e matriz. Que tipos de papeis são mais recomendados para a realização de uma xilogravura?",
+            "Identificar as ferramentas e materiais que podem ser usados para confeccionar uma matriz. Que preparos e cuidados devem ser tomados com o manuseio da mesma?",
+            "Como as modalidades de uma xilogravura são classificadas?",
+            "Que tintas são mais adequadas para uma boa impressão em xilogravura?",
+            "Pesquisar um tipo de arte ou literatura em que tenha sido utilizada e/oupropagada a xilogravura. Mencionar o local, período e importância histórica.",
+            {
+              "texto": "Usando as técnicas da Xilogravura (desenhar, esculpir e imprimir), fazer, pelo menos:",
+              "subitens": [
+                "Um cartão de saudação",
+                "Uma capa de um livro",
+                "Um objeto de livre escolha diferente dos anteriores"
+              ]
+            }
+          ]
+        },
+        {
+          "nome": "Cerâmica",
+          "codigo": "HM-020",
+          "nivel": 2,
+          "ano": 1956,
+          "observacao": "O cozimento da cerâmica não necessariamente deverá ser feito pelo Desbravador.",
+          "requisitos": [
+            "Definir o que é cerâmica e qual a sua origem.",
+            "Como a cerâmica pode ser classificada?",
+            {
+              "texto": "Descrever os seguintes termos:",
+              "subitens": [
+                "Cerâmica verde",
+                "Esmalte",
+                "Decalcar",
+                "Forno",
+                "Vitrificação",
+                "Torneamento",
+                "Colagem ou Fundição"
+              ]
+            },
+            "Qual a diferença entre a cerâmica tradicional e a cerâmica avançada? Citar exemplos de cada uma delas.",
+            "Citar, pelo menos, 2 métodos mais comuns que são utilizados na formação da cerâmica.",
+            "Descrever o processo de tratamento do barro ou argila. Explicar como evitar que apareçam bolhas durante o cozimento de uma peça.",
+            "Explicar como são utilizados os cones nos fornos industriais.",
+            "Saber como e quando utilizar o processo de vitrificação.",
+            "Citar algumas ferramentas que podem ser usadas para os trabalhos em cerâmica.",
+            "Através do processo de fabricação da cerâmica, tirar alguma lição espiritual considerando o barro com o ser humano e Deus como o oleiro.",
+            "Fazer um objeto de sua escolha usando o processo de vitrificação.",
+            {
+              "texto": "Fazer 2 dos seguintes itens onde, pelo menos, um seja feito através do processo de vitrificação:",
+              "subitens": [
+                "Pote de biscoitos",
+                "Vaso de flores",
+                "Jarro",
+                "Copo ou caneca",
+                "Uma bandeja de frutas",
+                "Travessa de porcelana",
+                "Objeto de sua escolha"
+              ]
+            }
+          ]
+        },
+        {
+          "nome": "Pintura em Tecido",
+          "codigo": "HM-021",
+          "nivel": 2,
+          "ano": 1956,
+          "requisitos": [
+            "Listar os materiais utilizados para pintura em tecido.",
+            "Saber como preparar o material para a pintura.",
+            "Quais as vantagens e desvantagens dos diferentes tipos de cerdas de pinceis?",
+            "Citar os diferentes usos dos diferentes tamanhos de pinceis.",
+            "Saber como misturar a tinta e limpar e armazenar os pincéis após terem sido usados.",
+            "Quanto tempo deve-se esperar para que a tintura seque?",
+            "Como deve ser feita a conservação e o armazenamento de uma peça pintada?",
+            "Saber como traçar e transferir uma figura para o tecido.",
+            "Demonstrar a centralização da estampa no tecido.",
+            "O que é um molde vazado ou estêncil?",
+            "Quais as diferenças entre as técnicas para pintura à mão livre e com molde vazado?",
+            "O que é necessário para fazer um molde vazado em casa?",
+            "Fazer um molde vazado a partir de uma figura de sua escolha.",
+            "Pintar uma estampa de cada fruta (para aprender a realçar luz e sombras); flores (para desenvolver um bom sombreado); e rosto humano (para aprender o uso do pincel fino).",
+            "Usando um estêncil, pintar algum objeto com, pelo menos, 2 cores."
+          ]
+        },
+        {
+          "nome": "Trabalhos em Feltro",
+          "codigo": "HM-022",
+          "nivel": 1,
+          "ano": 1956,
+          "requisitos": [
+            "A partir de que fibra é feito o feltro? O que lhe dá sua força elástica?",
+            "Mencionar 7 utilidades do feltro.",
+            "Apresentar 3 razões porque o feltro é um bom material para artesanato.",
+            "Mencionar os passos essenciais na fabricação do feltro.",
+            {
+              "texto": "Fazer 2 itens a seguir, usando, pelo menos, 3 cores diferentes de feltro:",
+              "subitens": [
+                "Figura para a Escola Sabatina",
+                "Marca páginas",
+                "Almofadas de alfinetes",
+                "Bandeirola",
+                "Imã de geladeira"
+              ]
+            },
+            {
+              "texto": "Fazer 2 dos itens a seguir:",
+              "subitens": [
+                "Pequeno mural de parede",
+                "Decoração temática para uma data especial",
+                "Fantoche",
+                "Pegadores de cozinha e descansos de panelas"
+              ]
+            },
+            {
+              "texto": "Costurar, em feltro, as seguintes peças:",
+              "subitens": [
+                "Animal com enchimento",
+                "Boneco ou outro brinquedo com enchimento",
+                "Sacola"
+              ]
+            }
+          ]
+        },
+        {
+          "nome": "Trabalhos em Acrílico",
+          "codigo": "HM-023",
+          "nivel": 2,
+          "ano": 1961,
+          "requisitos": [
+            "Fazer uma lista do material e equipamentos necessários para fazer pequenas peças de acrílico fundidas em moldes plásticos.",
+            "Saber como limpar e cuidar adequadamente dos moldes de plástico.",
+            "Que precauções de segurança devem ser tomadas ao trabalhar com acrílico?",
+            {
+              "texto": "Explicar como misturar resina para:",
+              "subitens": [
+                "Fundir",
+                "Fazer camada colorida"
+              ]
+            },
+            {
+              "texto": "Qual a finalidade dos seguintes materiais?",
+              "subitens": [
+                "Catalisador",
+                "Temperador de superfície",
+                "Pigmentos"
+              ]
+            },
+            "O que significa polimerização?",
+            "Fazer 3 peças fundidas com, pelo menos, um item incrustado em cada uma delas.",
+            "Preparar e incrustar 2 itens da natureza que sejam apropriados para esta técnica. Os itens da natureza podem ser incrustados numa peça fundida ou mais."
+          ]
+        },
+        {
+          "nome": "Modelagem e Fabricação de Sabão",
+          "codigo": "HM-024",
+          "nivel": 1,
+          "ano": 1964,
+          "requisitos": [
+            "Quais são os componentes básicos usados para se fazer sabão?",
+            "Qual é a diferença entre o sabão e o detergente?",
+            "O que causa a ação limpadora do sabão?",
+            "Mencionar 7 tipos de sabão. Explicar as vantagens e desvantagens de cada um deles.",
+            "O que é a espuma? Por que não necessariamente a quantidade de espuma determina a ação limpadora do sabão ou detergente?",
+            "Esculpir um objeto numa barra de sabão ou sabonete.",
+            "Decorar um sabonete para dar de presente."
+          ]
+        },
+        {
+          "nome": "Modelagem e Fabricação de Sabão - avançado",
+          "codigo": "HM-025",
+          "nivel": 2,
+          "ano": 1964,
+          "requisitos": [
+            "Ter a especialidade de Modelagem e fabricação de sabão.",
+            "Que tipos de gorduras podem ser usadas para fazer sabão?",
+            {
+              "texto": "O que deve ser modificado na fórmula do sabão para que ele fique?",
+              "subitens": [
+                "Transparente",
+                "Tão leve que boie na água",
+                "Mais duro"
+              ]
+            },
+            "Aprender e explicar os seguintes versos bíblicos: Jeremias 2:22; Malaquias 3:2.",
+            "Listar 4 técnicas diferentes de fazer sabão. Fazer uma medida de sabão usando 2 destas técnicas.",
+            "Fazer uma lista dos utensílios necessários para o cumprimento do requisito anterior.",
+            "Quais são os cuidados necessários durante a fabricação do sabão?",
+            {
+              "texto": "Cumprir um dos requisitos a seguir:",
+              "subitens": [
+                "Visitar uma fábrica de sabão.",
+                "Obter informações de uma fábrica de sabão, sobre como o mesmo é feito.",
+                "Fazer um relatório de, no mínimo, 2 páginas explicando o processo de fabricação do sabão e como ele age no processo de limpeza."
+              ]
+            }
+          ]
+        },
+        {
+          "nome": "Arte de Fazer Esteiras",
+          "codigo": "HM-026",
+          "nivel": 2,
+          "ano": "-",
+          "requisitos": [
+            "Mencionar, pelo menos, 2 materiais que são usados em seu país para fazer esteiras.",
+            "Explicar e demonstrar como preparar estes materiais para a confecção de esteiras.",
+            "Dar o nome de, pelo menos, 2 plantas de seu país que podem ser usadas para fazer tintas. Dizer onde são encontradas e como é feito o preparo da tinta a partir delas.",
+            "Demonstrar como usar tintas naturais e sintéticas para colorir esteiras.",
+            "Fazer, pelo menos, 2 esteiras com, ao menos, 2 tipos de trançados diferentes. Uma delas deve ter um trançado bem fino."
+          ]
+        }
+      ]
+    },
+    {
+      "area": "Atividades Agrícolas",
+      "lista": [
+        {
+          "nome": "Horticultura",
+          "descricao": "Descrição da especialidade Horticultura"
+        }
+      ]
+    },
+    {
+      "area": "Atividades Missionárias e Comunitárias",
+      "lista": [
+        {
+          "nome": "Evangelismo",
+          "descricao": "Descrição da especialidade Evangelismo"
+        }
+      ]
+    },
+    {
+      "area": "Atividades Recreativas",
+      "lista": [
+        {
+          "nome": "Liderança Campestre",
+          "codigo": "AR-057",
+          "nivel": 2,
+          "ano": 1986,
+          "requisitos": [
+            {
+              "texto": "Ter quatro das especialidades a seguir.",
+              "subitens": [
+                "Acampamento IV",
+                "Fogueiras e cozinha ao ar livre",
+                "Excursionismo pedestre",
+                "Excursionismo pedestre com mochila",
+                "Mapa e bússola",
+                "Pioneirismo"
+              ]
+            },
+            "Completar a especialidade de Primeiros socorros - intermediário.",
+            "Saber o que fazer para superar o medo quando estiver perdido. Conhecer pelo menos quatro maneiras de sinalizar pedidos de socorro.",
+            "Conhecer pelo menos quatro atividades seculares e quatro atividades para usar ao ar livre no sábado, mesmo se chover.",
+            {
+              "texto": "Fazer o seguinte ao ar livre.",
+              "subitens": [
+                "Planejar, organizar e ensinar uma especialidade para um grupo.",
+                "Ensinar uma especialidade a um grupo de desbravadores.",
+                "Descobrir onde fica o hospital mais próximo.",
+                "Descobrir onde fica o posto policial mais próximo.",
+                "Estudar na Bíblia como as atividades ao ar livre influenciaram personagens bíblicos: Moisés, Davi, Elias, João Batista, Jesus."
+              ]
+            },
+            {
+              "texto": "Saber que informações sobre a natureza devem ser dadas a um grupo.",
+              "subitens": [
+                "Segurança de acampamentos",
+                "Segurança contra incêndios",
+                "Saneamento",
+                "Regras de segurança na natação",
+                "Regras de conduta",
+                "Observância adequada do sábado"
+              ]
+            },
+            "Fazer uma lista de pelo menos seis maneiras de manter a natureza limpa.",
+            "Conhecer pelo menos dez qualidades de um bom líder JA."
+          ]
+        }
+      ]
+    },
+    {
+      "area": "Ciência e Saúde",
+      "lista": []
+    },
+    {
+      "area": "Estudos da Natureza",
+      "lista": []
+    },
+    {
+      "area": "Habilidades Domésticas",
+      "lista": []
+    },
+    {
+      "area": "Mestrados de Especialidades",
+      "lista": []
+    }
+  ]
+}

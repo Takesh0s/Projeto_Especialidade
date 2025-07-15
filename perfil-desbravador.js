@@ -130,7 +130,7 @@ async function gerenciarEspecialidades() {
 
   const { value: formConfirm } = await Swal.fire({
     title: 'Gerenciar Especialidades',
-    html: `<div style="text-align:left;max-height:300px;overflow:auto">${checkboxes}</div>`,
+    html: `<div class="checkbox-group" style="text-align:left;max-height:300px;overflow:auto">${checkboxes}</div>`,
     showCancelButton: true,
     preConfirm: () => {
       const selected = Array.from(document.querySelectorAll('input[type="checkbox"]:checked')).map(c => c.value);
@@ -140,10 +140,8 @@ async function gerenciarEspecialidades() {
 
   if (!formConfirm) return;
 
-  // Remove todas as atuais
   await supabase.from('desbravador_especialidade').delete().eq('desbravador_id', desbravadorId);
 
-  // Insere as novas
   for (let id of formConfirm) {
     await supabase.from('desbravador_especialidade').insert({
       desbravador_id: desbravadorId,

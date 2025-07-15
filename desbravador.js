@@ -102,3 +102,13 @@ listarDesbravadores();
 function verPerfil(id) {
   window.location.href = `perfil-desbravador.html?id=${id}`;
 }
+
+const toggleBtn = document.getElementById('toggleEspecialidades');
+const container = document.getElementById('especialidadesContainer');
+
+toggleBtn.addEventListener('click', () => {
+  const visivel = container.style.display === 'block';
+
+  container.style.display = visivel ? 'none' : 'block';
+  toggleBtn.textContent = visivel ? '+ Adicionar Especialidades' : '− Ocultar Especialidades';
+});

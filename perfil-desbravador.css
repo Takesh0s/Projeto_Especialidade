@@ -1,0 +1,64 @@
+.profile-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 40px;
+  padding: 40px;
+}
+
+.profile-card {
+  background-color: white;
+  border-radius: 20px;
+  padding: 30px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  width: 320px;
+}
+
+.profile-photo {
+  border-radius: 50%;
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+  display: block;
+  margin: 0 auto 20px;
+}
+
+.profile-card button,
+.profile-card a {
+  display: block;
+  margin: 10px auto;
+  padding: 10px;
+  width: 100%;
+  text-align: center;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.profile-card button {
+  background-color: #00cc66;
+  color: white;
+}
+
+.profile-card .danger-btn {
+  background-color: #ff4d4f;
+}
+
+.profile-card .back-link {
+  color: #0077cc;
+  text-decoration: none;
+}
+
+.profile-lists {
+  max-width: 400px;
+}
+
+.profile-lists h3 {
+  margin-top: 0;
+}
+
+.profile-lists ul {
+  list-style-type: disc;
+  padding-left: 20px;
+}
